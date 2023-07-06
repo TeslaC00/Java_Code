@@ -11,7 +11,7 @@ public class Task {
             int choice = takeInput();
             switch (choice) {
                 case 0:
-                    exit();
+                    confirmExit();
                     break;
                 case 1:
                     showAllList();
@@ -61,7 +61,7 @@ public class Task {
         System.out.println("Wanna Quit ?");
         String confirmation = scan.nextLine();
         if (confirmation.equalsIgnoreCase("yes")) {
-            exit();
+            System.exit(0);
         } else {
             clearSrc();
             mainMenu();
@@ -90,10 +90,6 @@ public class Task {
             takeInput();
         }
         return number;
-    }
-
-    private static void exit() {
-        System.exit(0);
     }
 
     private static void clearAllList() {
