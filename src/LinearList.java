@@ -25,7 +25,7 @@ public class LinearList {
         return head == null;
     }
 
-    void add(int data) {
+    void addLast(int data) {
         Node newNode = new Node(data);
         if (head == null) {
             head = newNode;
@@ -37,9 +37,6 @@ public class LinearList {
             temp.next = newNode;
         }
         size++;
-    }
-    void addLast(int data){
-        add(data);
     }
 
     void addFirst(int data){
