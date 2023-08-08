@@ -1,11 +1,25 @@
 class Main {
     public static void main(String[] args) {
 
+        // singleLinkedTest();
+        // doubleListTest();
+        circularLinkedTest();
+    }
+
+    static void circularLinkedTest(){
+        CircularLinkedList list = new CircularLinkedList();
+        list.addFirst(3);
+        list.addFirst(6);
+        list.addFirst(9);
+        list.display();
+    }
+
+    static void singleLinkedTest() {
         SingleLinkedList list = new SingleLinkedList();
         list.addLast(5);
         list.addFirst(1);
         list.addMid(2, 0);
-        list.removeMid(list.size(),0);
+        list.removeMid(list.size(), 0);
         list.removeLast();
         list.addLast(6);
         list.removeFirst();
