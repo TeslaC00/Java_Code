@@ -1,4 +1,4 @@
-public class LdList {
+public class LinearList {
     private static class Node {
         int data;
         Node next;
@@ -12,7 +12,7 @@ public class LdList {
     int size;
     Node head;
 
-    LdList() {
+    LinearList() {
         head = null;
         size = 0;
     }
