@@ -1,3 +1,16 @@
+/*
+ * contains()
+ * get(index)
+ * set(index,data)
+ * indexOf(data)
+ * insertAfter(node, data)
+ * insertBefore(node, data)
+ * remove(data)
+ * reverse()
+ * toArray()
+ * iterator()
+ * toString()
+ */
 public class SingleLinkedList {
     private static class Node {
         int data;
