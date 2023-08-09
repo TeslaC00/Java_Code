@@ -25,6 +25,11 @@ public class SingleLinkedList {
         return head == null;
     }
 
+    public void clear() {
+        head = null;
+        size = 0;
+    }
+
     public void addFirst(int data) {
         Node newNode = new Node(data);
         if (isEmpty()) {
@@ -50,12 +55,12 @@ public class SingleLinkedList {
             addFirst(data);
         else {
             Node newNode = new Node(data);
-            Node temp = head;
+            Node previousNode = head;
             for (int i = 1; i < index - 1; i++) {
-                temp = temp.next;
+                previousNode = previousNode.next;
             }
-            newNode.next = temp.next;
-            temp.next = newNode;
+            newNode.next = previousNode.next;
+            previousNode.next = newNode;
             size++;
         }
     }
@@ -65,11 +70,11 @@ public class SingleLinkedList {
         if (isEmpty()) {
             head = newNode;
         } else {
-            Node temp = head;
-            while (temp.next != null) {
-                temp = temp.next;
+            Node lastNode = head;
+            while (lastNode.next != null) {
+                lastNode = lastNode.next;
             }
-            temp.next = newNode;
+            lastNode.next = newNode;
         }
         size++;
     }
@@ -80,7 +85,7 @@ public class SingleLinkedList {
             return;
         }
         if (size == 1) {
-            resetList();
+            clear();
         } else {
             head = head.next;
             size--;
@@ -88,7 +93,7 @@ public class SingleLinkedList {
     }
 
     /** Index starts from 1 */
-    public void removeMid(int index, int data) {
+    public void removeMid(int index) {
         if (isEmpty()) {
             System.out.println("List is empty");
             return;
@@ -104,11 +109,11 @@ public class SingleLinkedList {
         }
 
         else {
-            Node temp = head;
+            Node previousNode = head;
             for (int i = 1; i < index - 1; i++) {
-                temp = temp.next;
+                previousNode = previousNode.next;
             }
-            temp.next = temp.next.next;
+            previousNode.next = previousNode.next.next;
             size--;
         }
     }
@@ -119,30 +124,25 @@ public class SingleLinkedList {
             return;
         }
         if (size == 1) {
-            resetList();
+            clear();
         } else {
-            Node temp = head;
-            while (temp.next.next != null) {
-                temp = temp.next;
+            Node secondLastNode = head;
+            while (secondLastNode.next.next != null) {
+                secondLastNode = secondLastNode.next;
             }
-            temp.next = null;
+            secondLastNode.next = null;
             size--;
         }
-    }
-
-    public void resetList() {
-        head = null;
-        size = 0;
     }
 
     public void display() {
         if (isEmpty()) {
             System.out.println("List is empty");
         } else {
-            Node temp = head;
-            while (temp != null) {
-                System.out.print(temp.data + " ");
-                temp = temp.next;
+            Node currentNode = head;
+            while (currentNode != null) {
+                System.out.print(currentNode.data + " ");
+                currentNode = currentNode.next;
             }
             System.out.println();
         }

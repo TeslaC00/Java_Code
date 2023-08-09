@@ -1,18 +1,28 @@
 class Main {
     public static void main(String[] args) {
 
-        singleLinkedTest();
+        // singleLinkedTest();
         // doubleListTest();
-        // circularLinkedTest();
+        circularLinkedTest();
     }
 
-    static void circularLinkedTest(){
+    static void circularLinkedTest() {
         CircularLinkedList list = new CircularLinkedList();
         list.addFirst(3);
+        list.addLast(999);
+        list.display();
         list.addFirst(6);
         list.addFirst(9);
         list.display();
-        System.out.println(list.getSize());
+        list.addMid(3, 24202);
+        list.addMid(4, 4);
+        list.display();
+        list.removeFirst();
+        list.display();
+        list.removeMid(5);
+        list.display();
+        list.removeLast();
+        list.display();
     }
 
     static void singleLinkedTest() {
@@ -20,7 +30,7 @@ class Main {
         list.addLast(5);
         list.addFirst(1);
         list.addMid(2, 0);
-        list.removeMid(list.size(), 0);
+        list.removeMid(list.size());
         list.removeLast();
         list.addLast(6);
         list.removeFirst();
@@ -42,7 +52,7 @@ class Main {
         list.display();
         list.removeFirst();
         list.display();
-        list.removeMid(3);
+        list.removeMid(5);
         list.display();
         list.removeLast();
         list.display();

@@ -27,6 +27,11 @@ public class DoublyLinkedList {
         return head == null;
     }
 
+    private void clear() {
+        head = null;
+        size = 0;
+    }
+
     public void addFirst(int data) {
         Node newNode = new Node(data);
         if (isEmpty()) {
@@ -54,14 +59,14 @@ public class DoublyLinkedList {
             addFirst(data);
         } else {
             Node newNode = new Node(data);
-            Node temp = head;
-            for (int i = 2; i < index; i++) {
-                temp = temp.next;
+            Node previousNode = head;
+            for (int i = 1; i < index - 1; i++) {
+                previousNode = previousNode.next;
             }
-            newNode.next = temp.next;
-            newNode.prev = temp;
-            temp.next.prev = newNode;
-            temp.next = newNode;
+            newNode.next = previousNode.next;
+            newNode.prev = previousNode;
+            previousNode.next.prev = newNode;
+            previousNode.next = newNode;
             size++;
         }
     }
@@ -72,12 +77,12 @@ public class DoublyLinkedList {
             head = newNode;
             size++;
         } else {
-            Node temp = head;
-            while (temp.next != null) {
-                temp = temp.next;
+            Node lastNode = head;
+            while (lastNode.next != null) {
+                lastNode = lastNode.next;
             }
-            temp.next = newNode;
-            newNode.prev = temp;
+            lastNode.next = newNode;
+            newNode.prev = lastNode;
             size++;
         }
     }
@@ -88,7 +93,7 @@ public class DoublyLinkedList {
             return;
         }
         if (size == 1) {
-            resetList();
+            clear();
         } else {
             head.next.prev = null;
             head = head.next;
@@ -97,6 +102,10 @@ public class DoublyLinkedList {
     }
 
     public void removeMid(int index) {
+        if (isEmpty()) {
+            System.out.println("List is empty");
+            return;
+        }
         if (index < 1 || index > size) {
             System.out.println("Index not found");
             return;
@@ -106,12 +115,12 @@ public class DoublyLinkedList {
         } else if (index == size) {
             removeLast();
         } else {
-            Node temp = head;
-            for (int i = 2; i < index; i++) {
-                temp = temp.next;
+            Node indexNode = head;
+            for (int i = 1; i < index; i++) {
+                indexNode = indexNode.next;
             }
-            temp.next.next.prev = temp;
-            temp.next = temp.next.next;
+            indexNode.next.prev = indexNode.prev;
+            indexNode.prev.next = indexNode.next;
             size--;
         }
     }
@@ -122,31 +131,26 @@ public class DoublyLinkedList {
             return;
         }
         if (size == 1) {
-            resetList();
+            clear();
         } else {
-            Node temp = head;
-            while (temp.next.next != null) {
-                temp = temp.next;
+            Node secondLastNode = head;
+            while (secondLastNode.next.next != null) {
+                secondLastNode = secondLastNode.next;
             }
-            temp.next.prev = null;
-            temp.next = null;
+            secondLastNode.next.prev = null;
+            secondLastNode.next = null;
             size--;
         }
-    }
-
-    private void resetList() {
-        head = null;
-        size = 0;
     }
 
     public void display() {
         if (isEmpty()) {
             System.out.println("List is empty");
         } else {
-            Node temp = head;
-            while (temp != null) {
-                System.out.print(temp.data + " ");
-                temp = temp.next;
+            Node currentNode = head;
+            while (currentNode != null) {
+                System.out.print(currentNode.data + " ");
+                currentNode = currentNode.next;
             }
             System.out.println();
         }
