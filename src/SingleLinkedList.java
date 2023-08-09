@@ -1,5 +1,5 @@
 /*
- * contains()
+ * contains(value)
  * get(index)
  * set(index,data)
  * indexOf(data)
