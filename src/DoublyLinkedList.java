@@ -140,12 +140,16 @@ public class DoublyLinkedList {
     }
 
     public void display() {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
+        if (isEmpty()) {
+            System.out.println("List is empty");
+        } else {
+            Node temp = head;
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println();
         }
-        System.out.println();
     }
 
 }

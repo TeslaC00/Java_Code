@@ -1,9 +1,9 @@
 class Main {
     public static void main(String[] args) {
 
-        // singleLinkedTest();
+        singleLinkedTest();
         // doubleListTest();
-        circularLinkedTest();
+        // circularLinkedTest();
     }
 
     static void circularLinkedTest(){
@@ -12,6 +12,7 @@ class Main {
         list.addFirst(6);
         list.addFirst(9);
         list.display();
+        System.out.println(list.getSize());
     }
 
     static void singleLinkedTest() {

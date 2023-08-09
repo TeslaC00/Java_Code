@@ -1,8 +1,9 @@
 public class CircularLinkedList {
-    private static class Node{
+    private static class Node {
         private int data;
         private Node next;
-        public Node(int data){
+
+        public Node(int data) {
             this.data = data;
             next = null;
         }
@@ -15,40 +16,44 @@ public class CircularLinkedList {
         return size;
     }
 
-    public CircularLinkedList(){
+    public CircularLinkedList() {
         head = null;
         size = 0;
     }
 
-    public boolean isEmpty(){
-        return head==null;
+    public boolean isEmpty() {
+        return head == null;
     }
 
-    public void addFirst(int data){
+    public void addFirst(int data) {
         Node newNode = new Node(data);
-        if(isEmpty()){
+        if (isEmpty()) {
             head = newNode;
             newNode.next = head;
             size++;
-        }
-        else{
+        } else {
             Node temp = head;
-            while(temp.next != head){
+            while (temp.next != head) {
                 temp = temp.next;
             }
-            temp.next = newNode;
             newNode.next = head;
+            temp.next = newNode;
             head = newNode;
             size++;
         }
     }
 
-    public void display(){
-        Node temp = head;
-        while(temp.next != head){
-            System.out.print(temp.data+" ");
-            temp = temp.next;
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("List is empty");
+        } else {
+            Node temp = head;
+            do {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            } while (temp != head);
+            System.out.println();
         }
-        System.out.println();
+
     }
 }
