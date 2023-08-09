@@ -1,3 +1,15 @@
+/*
+ * addToEmpty(value)
+ * addToBeginning(value)
+ * addToEnd(value)
+ * insertAfter(node, value)
+ * insertBefore(node, value)
+ * deleteNodeByKey(key): Delete the first node with the given value from the list.
+ * deleteNode(node): Delete the specified node from the list.
+ * traverse()
+ * search(key)
+ * getFirst()
+ */
 public class CircularLinkedList {
     private static class Node {
         private int data;
@@ -51,11 +63,11 @@ public class CircularLinkedList {
     /** Index starts from 1 */
     public void addMid(int index, int data) {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (index < 1 || index > size) {
-            System.out.print("Index not found");
+            System.err.print("Index not found");
             return;
         }
         if (index == 1) {
@@ -91,7 +103,7 @@ public class CircularLinkedList {
 
     public void removeFirst() {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (size == 1) {
@@ -109,11 +121,11 @@ public class CircularLinkedList {
 
     public void removeMid(int index) {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (index < 1 || index > size) {
-            System.out.println("Index not found");
+            System.err.println("Index not found");
             return;
         }
         if (index == 1) {
@@ -130,7 +142,7 @@ public class CircularLinkedList {
 
     public void removeLast() {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (size == 1) {
@@ -147,7 +159,7 @@ public class CircularLinkedList {
 
     public void display() {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
         } else {
             Node currentNode = head;
             do {

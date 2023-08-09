@@ -1,9 +1,9 @@
 class Main {
     public static void main(String[] args) {
 
-        // singleLinkedTest();
+        singleLinkedTest();
         // doubleListTest();
-        circularLinkedTest();
+        // circularLinkedTest();
     }
 
     static void circularLinkedTest() {

@@ -1,3 +1,16 @@
+/*
+ * insertBefore(node, value)
+ * insertAfter(node, value)
+ * remove(node)
+ * iterateForward()
+ * iterateBackward()
+ * find(value)
+ * findAll(value)
+ * getFirst(): Get the value of the first node in the list.
+ * getLast(): Get the value of the last node in the list.
+ * getAt(index): Get the value of the node at the specified index
+ * setValue(node, value)
+ */
 public class DoublyLinkedList {
     private static class Node {
         int data;
@@ -48,11 +61,11 @@ public class DoublyLinkedList {
     /** Index starts from 1 */
     public void addMid(int index, int data) {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (index < 1 || index > size) {
-            System.out.println("Index not found");
+            System.err.println("Index not found");
             return;
         }
         if (index == 1) {
@@ -89,7 +102,7 @@ public class DoublyLinkedList {
 
     public void removeFirst() {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (size == 1) {
@@ -103,11 +116,11 @@ public class DoublyLinkedList {
 
     public void removeMid(int index) {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (index < 1 || index > size) {
-            System.out.println("Index not found");
+            System.err.println("Index not found");
             return;
         }
         if (index == 1) {
@@ -127,7 +140,7 @@ public class DoublyLinkedList {
 
     public void removeLast() {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
             return;
         }
         if (size == 1) {
@@ -145,7 +158,7 @@ public class DoublyLinkedList {
 
     public void display() {
         if (isEmpty()) {
-            System.out.println("List is empty");
+            System.err.println("List is empty");
         } else {
             Node currentNode = head;
             while (currentNode != null) {
