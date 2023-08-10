@@ -1,3 +1,4 @@
+package dataStrcutures.list;
 /*
  * addToEmpty(value)
  * addToBeginning(value)

@@ -1,31 +1,34 @@
+package dataStrcutures.list;
 /*
- * contains(value)
- * get(index)
- * set(index,data)
- * indexOf(data)
- * insertAfter(node, data)
- * insertBefore(node, data)
- * remove(data)
- * reverse()
- * toArray()
- * iterator()
- * toString()
+ * insertBefore(node, value)
+ * insertAfter(node, value)
+ * remove(node)
+ * iterateForward()
+ * iterateBackward()
+ * find(value)
+ * findAll(value)
+ * getFirst(): Get the value of the first node in the list.
+ * getLast(): Get the value of the last node in the list.
+ * getAt(index): Get the value of the node at the specified index
+ * setValue(node, value)
  */
-public class SingleLinkedList {
+public class DoublyLinkedList {
     private static class Node {
         int data;
+        Node prev;
         Node next;
 
         public Node(int data) {
             this.data = data;
-            this.next = null;
+            prev = null;
+            next = null;
         }
     }
 
-    private int size;
     private Node head;
+    private int size;
 
-    public SingleLinkedList() {
+    public DoublyLinkedList() {
         head = null;
         size = 0;
     }
@@ -38,7 +41,7 @@ public class SingleLinkedList {
         return head == null;
     }
 
-    public void clear() {
+    private void clear() {
         head = null;
         size = 0;
     }
@@ -47,11 +50,13 @@ public class SingleLinkedList {
         Node newNode = new Node(data);
         if (isEmpty()) {
             head = newNode;
+            size++;
         } else {
+            head.prev = newNode;
             newNode.next = head;
             head = newNode;
+            size++;
         }
-        size++;
     }
 
     /** Index starts from 1 */
@@ -64,15 +69,17 @@ public class SingleLinkedList {
             System.err.println("Index not found");
             return;
         }
-        if (index == 1)
+        if (index == 1) {
             addFirst(data);
-        else {
+        } else {
             Node newNode = new Node(data);
             Node previousNode = head;
             for (int i = 1; i < index - 1; i++) {
                 previousNode = previousNode.next;
             }
             newNode.next = previousNode.next;
+            newNode.prev = previousNode;
+            previousNode.next.prev = newNode;
             previousNode.next = newNode;
             size++;
         }
@@ -82,14 +89,16 @@ public class SingleLinkedList {
         Node newNode = new Node(data);
         if (isEmpty()) {
             head = newNode;
+            size++;
         } else {
             Node lastNode = head;
             while (lastNode.next != null) {
                 lastNode = lastNode.next;
             }
             lastNode.next = newNode;
+            newNode.prev = lastNode;
+            size++;
         }
-        size++;
     }
 
     public void removeFirst() {
@@ -100,33 +109,32 @@ public class SingleLinkedList {
         if (size == 1) {
             clear();
         } else {
+            head.next.prev = null;
             head = head.next;
             size--;
         }
     }
 
-    /** Index starts from 1 */
     public void removeMid(int index) {
         if (isEmpty()) {
             System.err.println("List is empty");
             return;
         }
-
         if (index < 1 || index > size) {
             System.err.println("Index not found");
             return;
         }
-
         if (index == 1) {
             removeFirst();
-        }
-
-        else {
-            Node previousNode = head;
-            for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.next;
+        } else if (index == size) {
+            removeLast();
+        } else {
+            Node indexNode = head;
+            for (int i = 1; i < index; i++) {
+                indexNode = indexNode.next;
             }
-            previousNode.next = previousNode.next.next;
+            indexNode.next.prev = indexNode.prev;
+            indexNode.prev.next = indexNode.next;
             size--;
         }
     }
@@ -143,6 +151,7 @@ public class SingleLinkedList {
             while (secondLastNode.next.next != null) {
                 secondLastNode = secondLastNode.next;
             }
+            secondLastNode.next.prev = null;
             secondLastNode.next = null;
             size--;
         }
@@ -160,4 +169,5 @@ public class SingleLinkedList {
             System.out.println();
         }
     }
+
 }

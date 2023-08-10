@@ -1,3 +1,7 @@
+import dataStrcutures.list.CircularLinkedList;
+import dataStrcutures.list.DoublyLinkedList;
+import dataStrcutures.list.SingleLinkedList;
+
 class Main {
     public static void main(String[] args) {
 
