@@ -1,6 +1,4 @@
 public class Display {
-    
-    Display(){}
 
     public static <T> void array(T a[]){
         for(T i: a){
