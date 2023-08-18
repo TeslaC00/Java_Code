@@ -1,6 +1,6 @@
 package dataStrcutures.list;
+
 /*
- * contains(value)
  * get(index)
  * set(index,data)
  * indexOf(data)
@@ -12,15 +12,40 @@ package dataStrcutures.list;
  * iterator()
  * toString()
  */
+
 public class SingleLinkedList {
+
+    private class EmptyListException extends RuntimeException {
+        public EmptyListException() {
+            super("List is empty");
+        }
+    }
+
     private static class Node {
-        int data;
-        Node next;
+        private int data;
+        private Node next;
 
         public Node(int data) {
             this.data = data;
             this.next = null;
         }
+
+        public int getData() {
+            return data;
+        }
+
+        public void setData(int data) {
+            this.data = data;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
     }
 
     private int size;
@@ -49,7 +74,7 @@ public class SingleLinkedList {
         if (isEmpty()) {
             head = newNode;
         } else {
-            newNode.next = head;
+            newNode.setNext(head);
             head = newNode;
         }
         size++;
@@ -57,24 +82,22 @@ public class SingleLinkedList {
 
     /** Index starts from 1 */
     public void addMid(int index, int data) {
-        if (isEmpty()) {
-            System.err.println("List is empty");
-            return;
-        }
-        if (index < 1 || index > size) {
-            System.err.println("Index not found");
-            return;
-        }
+        if (isEmpty())
+            throw new EmptyListException();
+
+        if (index < 1 || index > size)
+            throw new IndexOutOfBoundsException("Index is out of bound");
+
         if (index == 1)
             addFirst(data);
         else {
             Node newNode = new Node(data);
             Node previousNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.next;
+                previousNode = previousNode.getNext();
             }
-            newNode.next = previousNode.next;
-            previousNode.next = newNode;
+            newNode.setNext(previousNode.getNext());
+            previousNode.setNext(newNode);
             size++;
         }
     }
@@ -85,80 +108,84 @@ public class SingleLinkedList {
             head = newNode;
         } else {
             Node lastNode = head;
-            while (lastNode.next != null) {
-                lastNode = lastNode.next;
+            while (lastNode.getNext() != null) {
+                lastNode = lastNode.getNext();
             }
-            lastNode.next = newNode;
+            lastNode.setNext(newNode);
         }
         size++;
     }
 
     public void removeFirst() {
-        if (isEmpty()) {
-            System.err.println("List is empty");
-            return;
-        }
+        if (isEmpty())
+            throw new EmptyListException();
+
         if (size == 1) {
             clear();
         } else {
-            head = head.next;
+            head = head.getNext();
             size--;
         }
     }
 
     /** Index starts from 1 */
     public void removeMid(int index) {
-        if (isEmpty()) {
-            System.err.println("List is empty");
-            return;
-        }
+        if (isEmpty())
+            throw new EmptyListException();
 
-        if (index < 1 || index > size) {
-            System.err.println("Index not found");
-            return;
-        }
+        if (index < 1 || index > size)
+            throw new IndexOutOfBoundsException("Index is out of bound");
 
-        if (index == 1) {
+        if (index == 1)
             removeFirst();
-        }
 
         else {
             Node previousNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.next;
+                previousNode = previousNode.getNext();
             }
-            previousNode.next = previousNode.next.next;
+            previousNode.setNext(previousNode.getNext().getNext());
             size--;
         }
     }
 
     public void removeLast() {
-        if (isEmpty()) {
-            System.err.println("List is empty");
-            return;
-        }
+        if (isEmpty())
+            throw new EmptyListException();
         if (size == 1) {
             clear();
         } else {
             Node secondLastNode = head;
-            while (secondLastNode.next.next != null) {
-                secondLastNode = secondLastNode.next;
+            while (secondLastNode.getNext().getNext() != null) {
+                secondLastNode = secondLastNode.getNext();
             }
-            secondLastNode.next = null;
+            secondLastNode.setNext(null);
             size--;
         }
     }
 
-    public void display() {
-        if (isEmpty()) {
-            System.err.println("List is empty");
-        } else {
-            Node currentNode = head;
-            while (currentNode != null) {
-                System.out.print(currentNode.data + " ");
-                currentNode = currentNode.next;
-            }
-            System.out.println();
+    public boolean contains(int value) {
+        if (isEmpty())
+            throw new EmptyListException();
+
+        Node currentNode = head;
+        while (currentNode != null) {
+            if (currentNode.getData() == value)
+                return true;
+            currentNode = currentNode.getNext();
         }
+        return false;
     }
+
+    public void display() {
+        if (isEmpty())
+            throw new EmptyListException();
+        Node currentNode = head;
+        while (currentNode != null) {
+            System.out.print(currentNode.data + " ");
+            currentNode = currentNode.getNext();
+        }
+        System.out.println();
+    }
+
 }

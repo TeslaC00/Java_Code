@@ -4,11 +4,9 @@ import dataStrcutures.list.SingleLinkedList;
 
 class Main {
     public static void main(String[] args) {
-
         singleLinkedTest();
-        // doubleListTest();
-        // circularLinkedTest();
     }
+
 
     static void circularLinkedTest() {
         CircularLinkedList list = new CircularLinkedList();
@@ -32,12 +30,19 @@ class Main {
     static void singleLinkedTest() {
         SingleLinkedList list = new SingleLinkedList();
         list.addLast(5);
+        list.display();
         list.addFirst(1);
+        list.display();
         list.addMid(2, 0);
+        list.display();
         list.removeMid(list.size());
+        list.display();
         list.removeLast();
+        list.display();
         list.addLast(6);
+        list.display();
         list.removeFirst();
+        list.display();
         list.removeFirst();
         list.display();
         System.out.println(list.size());
