@@ -2,7 +2,6 @@ package dataStrcutures.list;
 
 /*
  * get(index)
- * set(index,data)
  * indexOf(data)
  * insertAfter(node, data)
  * insertBefore(node, data)
@@ -175,6 +174,17 @@ public class SingleLinkedList {
             currentNode = currentNode.getNext();
         }
         return false;
+    }
+
+    /** Index starts from 1 */
+    public void set(int index, int value) {
+        if (index > size)
+            throw new IndexOutOfBoundsException("Index is out of bound");
+        Node currentNode = head;
+        for (int i = 1; i < index; i++) {
+            currentNode = currentNode.getNext();
+        }
+        currentNode.setData(value);
     }
 
     public void display() {

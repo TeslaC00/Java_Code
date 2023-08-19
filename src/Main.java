@@ -40,12 +40,9 @@ class Main {
         list.removeLast();
         list.display();
         list.addLast(6);
+        list.set(2, 54);
         list.display();
-        list.removeFirst();
-        list.display();
-        list.removeFirst();
-        list.display();
-        System.out.println(list.size());
+        System.out.println("Size: "+list.size());
     }
 
     static void doubleListTest() {
