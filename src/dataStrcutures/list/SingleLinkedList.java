@@ -1,18 +1,17 @@
 package dataStrcutures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /*
  * get(index)
  * indexOf(data)
  * insertAfter(node, data)
  * insertBefore(node, data)
- * remove(data)
  * reverse()
- * toArray()
- * iterator()
- * toString()
  */
 
-public class SingleLinkedList {
+public class SingleLinkedList implements Iterable<Integer> {
 
     private class EmptyListException extends RuntimeException {
         public EmptyListException() {
@@ -70,12 +69,8 @@ public class SingleLinkedList {
 
     public void addFirst(int data) {
         Node newNode = new Node(data);
-        if (isEmpty()) {
-            head = newNode;
-        } else {
-            newNode.setNext(head);
-            head = newNode;
-        }
+        newNode.setNext(head);
+        head = newNode;
         size++;
     }
 
@@ -91,12 +86,12 @@ public class SingleLinkedList {
             addFirst(data);
         else {
             Node newNode = new Node(data);
-            Node previousNode = head;
+            Node currentNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.getNext();
+                currentNode = currentNode.getNext();
             }
-            newNode.setNext(previousNode.getNext());
-            previousNode.setNext(newNode);
+            newNode.setNext(currentNode.getNext());
+            currentNode.setNext(newNode);
             size++;
         }
     }
@@ -106,11 +101,14 @@ public class SingleLinkedList {
         if (isEmpty()) {
             head = newNode;
         } else {
-            Node lastNode = head;
-            while (lastNode.getNext() != null) {
-                lastNode = lastNode.getNext();
-            }
-            lastNode.setNext(newNode);
+            // Node lastNode = head;
+            // while (lastNode.getNext() != null) {
+            // lastNode = lastNode.getNext();
+            // }
+            Node currNode, nextNode;
+            for (currNode = head; (nextNode = currNode.getNext()) != null; currNode = nextNode)
+                ;
+            currNode.setNext(newNode);
         }
         size++;
     }
@@ -139,11 +137,11 @@ public class SingleLinkedList {
             removeFirst();
 
         else {
-            Node previousNode = head;
+            Node currentNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.getNext();
+                currentNode = currentNode.getNext();
             }
-            previousNode.setNext(previousNode.getNext().getNext());
+            currentNode.setNext(currentNode.getNext().getNext());
             size--;
         }
     }
@@ -154,22 +152,37 @@ public class SingleLinkedList {
         if (size == 1) {
             clear();
         } else {
-            Node secondLastNode = head;
-            while (secondLastNode.getNext().getNext() != null) {
-                secondLastNode = secondLastNode.getNext();
+            Node currentNode = head;
+            while (currentNode.getNext().getNext() != null) {
+                currentNode = currentNode.getNext();
             }
-            secondLastNode.setNext(null);
+            currentNode.setNext(null);
             size--;
         }
     }
 
-    public boolean contains(int value) {
+    public void removeValue(int data) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (head.getData() == data)
+            removeFirst();
+        else {
+            Node currentNode = head;
+            while (currentNode.getNext().getData() != data) {
+                currentNode = currentNode.getNext();
+            }
+            currentNode.setNext(currentNode.getNext().getNext());
+            size--;
+        }
+    }
+
+    public boolean contains(int data) {
         if (isEmpty())
             throw new EmptyListException();
 
         Node currentNode = head;
         while (currentNode != null) {
-            if (currentNode.getData() == value)
+            if (currentNode.getData() == data)
                 return true;
             currentNode = currentNode.getNext();
         }
@@ -177,25 +190,79 @@ public class SingleLinkedList {
     }
 
     /** Index starts from 1 */
-    public void set(int index, int value) {
-        if (index > size)
+    public void set(int index, int data) {
+        if (index < 1 || index > size)
             throw new IndexOutOfBoundsException("Index is out of bound");
         Node currentNode = head;
         for (int i = 1; i < index; i++) {
             currentNode = currentNode.getNext();
         }
-        currentNode.setData(value);
+        currentNode.setData(data);
+    }
+
+    public int[] toArray() {
+
+        if (isEmpty())
+            return null;
+
+        int arr[] = new int[size];
+        Node curentNode = head;
+        for (int i = 0; i < size; i++) {
+            arr[i] = curentNode.getData();
+            curentNode = curentNode.getNext();
+        }
+
+        return arr;
+    }
+
+    /** Elements are seperated by space in the string returned */
+    public String toString() {
+        if (isEmpty())
+            return "";
+        StringBuilder strBuilder = new StringBuilder();
+        for (Integer i : this) {
+            strBuilder.append(i + " ");
+        }
+        return strBuilder.toString();
     }
 
     public void display() {
         if (isEmpty())
             throw new EmptyListException();
-        Node currentNode = head;
-        while (currentNode != null) {
-            System.out.print(currentNode.data + " ");
-            currentNode = currentNode.getNext();
+        for (Integer i : this) {
+            System.out.print(i + " ");
         }
         System.out.println();
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<Integer> {
+
+        private Node currentNode;
+
+        ListIterator() {
+            currentNode = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public Integer next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            int data = currentNode.getData();
+            currentNode = currentNode.getNext();
+            return data;
+        }
+
     }
 
 }

@@ -43,6 +43,14 @@ class Main {
         list.set(2, 54);
         list.display();
         System.out.println("Size: "+list.size());
+        System.out.println(list.toString());
+        System.out.println(list.toString().length());
+        list.removeValue(54);
+        for (Integer i : list) {
+            System.out.print(i+" ");
+        }
+        System.out.println("\nSize: "+list.size());
+        System.out.println(list.contains(1));
     }
 
     static void doubleListTest() {
