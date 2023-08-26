@@ -4,24 +4,27 @@ import dataStrcutures.list.SingleLinkedList;
 
 class Main {
     public static void main(String[] args) {
-        singleLinkedTest();
+        doubleListTest();
     }
 
 
     static void circularLinkedTest() {
         CircularLinkedList list = new CircularLinkedList();
         list.addFirst(3);
+        list.display();
         list.addLast(999);
         list.display();
         list.addFirst(6);
+        list.display();
         list.addFirst(9);
         list.display();
         list.addMid(3, 24202);
+        list.display();
         list.addMid(4, 4);
         list.display();
         list.removeFirst();
         list.display();
-        list.removeMid(5);
+        list.removeMid(2);
         list.display();
         list.removeLast();
         list.display();
@@ -56,8 +59,11 @@ class Main {
     static void doubleListTest() {
         DoublyLinkedList list = new DoublyLinkedList();
         list.addLast(4);
-        list.addLast(5);
+        list.display();
+        list.addFirst(5);
+        list.display();
         list.addLast(63);
+        list.display();
         list.addLast(42);
         list.display();
         list.addFirst(0);
@@ -66,7 +72,7 @@ class Main {
         list.display();
         list.removeFirst();
         list.display();
-        list.removeMid(5);
+        list.removeMid(3);
         list.display();
         list.removeLast();
         list.display();

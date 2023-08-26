@@ -1,4 +1,5 @@
 package dataStrcutures.list;
+
 /*
  * insertBefore(node, value)
  * insertAfter(node, value)
@@ -12,6 +13,7 @@ package dataStrcutures.list;
  * getAt(index): Get the value of the node at the specified index
  * setValue(node, value)
  */
+
 public class DoublyLinkedList {
     private static class Node {
         int data;
@@ -26,10 +28,12 @@ public class DoublyLinkedList {
     }
 
     private Node head;
+    private Node tail;
     private int size;
 
     public DoublyLinkedList() {
         head = null;
+        tail = null;
         size = 0;
     }
 
@@ -43,6 +47,7 @@ public class DoublyLinkedList {
 
     private void clear() {
         head = null;
+        tail = null;
         size = 0;
     }
 
@@ -50,6 +55,7 @@ public class DoublyLinkedList {
         Node newNode = new Node(data);
         if (isEmpty()) {
             head = newNode;
+            tail = newNode;
             size++;
         } else {
             head.prev = newNode;
@@ -73,14 +79,14 @@ public class DoublyLinkedList {
             addFirst(data);
         } else {
             Node newNode = new Node(data);
-            Node previousNode = head;
+            Node currNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.next;
+                currNode = currNode.next;
             }
-            newNode.next = previousNode.next;
-            newNode.prev = previousNode;
-            previousNode.next.prev = newNode;
-            previousNode.next = newNode;
+            newNode.next = currNode.next;
+            newNode.prev = currNode;
+            currNode.next.prev = newNode;
+            currNode.next = newNode;
             size++;
         }
     }
@@ -89,14 +95,12 @@ public class DoublyLinkedList {
         Node newNode = new Node(data);
         if (isEmpty()) {
             head = newNode;
+            tail = newNode;
             size++;
         } else {
-            Node lastNode = head;
-            while (lastNode.next != null) {
-                lastNode = lastNode.next;
-            }
-            lastNode.next = newNode;
-            newNode.prev = lastNode;
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
             size++;
         }
     }
@@ -129,12 +133,12 @@ public class DoublyLinkedList {
         } else if (index == size) {
             removeLast();
         } else {
-            Node indexNode = head;
+            Node currNode = head;
             for (int i = 1; i < index; i++) {
-                indexNode = indexNode.next;
+                currNode = currNode.next;
             }
-            indexNode.next.prev = indexNode.prev;
-            indexNode.prev.next = indexNode.next;
+            currNode.next.prev = currNode.prev;
+            currNode.prev.next = currNode.next;
             size--;
         }
     }
@@ -147,12 +151,8 @@ public class DoublyLinkedList {
         if (size == 1) {
             clear();
         } else {
-            Node secondLastNode = head;
-            while (secondLastNode.next.next != null) {
-                secondLastNode = secondLastNode.next;
-            }
-            secondLastNode.next.prev = null;
-            secondLastNode.next = null;
+            tail = tail.prev;
+            tail.next = null;
             size--;
         }
     }
@@ -161,10 +161,10 @@ public class DoublyLinkedList {
         if (isEmpty()) {
             System.err.println("List is empty");
         } else {
-            Node currentNode = head;
-            while (currentNode != null) {
-                System.out.print(currentNode.data + " ");
-                currentNode = currentNode.next;
+            Node currNode = head;
+            while (currNode != null) {
+                System.out.print(currNode.data + " ");
+                currNode = currNode.next;
             }
             System.out.println();
         }

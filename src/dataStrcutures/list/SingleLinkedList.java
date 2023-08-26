@@ -6,8 +6,6 @@ import java.util.NoSuchElementException;
 /*
  * get(index)
  * indexOf(data)
- * insertAfter(node, data)
- * insertBefore(node, data)
  * reverse()
  */
 

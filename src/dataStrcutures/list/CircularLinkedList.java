@@ -1,16 +1,13 @@
 package dataStrcutures.list;
+
 /*
  * addToEmpty(value)
- * addToBeginning(value)
- * addToEnd(value)
- * insertAfter(node, value)
- * insertBefore(node, value)
  * deleteNodeByKey(key): Delete the first node with the given value from the list.
- * deleteNode(node): Delete the specified node from the list.
  * traverse()
  * search(key)
  * getFirst()
  */
+
 public class CircularLinkedList {
     private static class Node {
         private int data;
@@ -22,7 +19,7 @@ public class CircularLinkedList {
         }
     }
 
-    private Node head;
+    private Node tail;
     private int size;
 
     public int getSize() {
@@ -30,33 +27,28 @@ public class CircularLinkedList {
     }
 
     public CircularLinkedList() {
-        head = null;
+        tail = null;
         size = 0;
     }
 
     public boolean isEmpty() {
-        return head == null;
+        return tail == null;
     }
 
     public void clear() {
-        head = null;
+        tail = null;
         size = 0;
     }
 
     public void addFirst(int data) {
         Node newNode = new Node(data);
         if (isEmpty()) {
-            head = newNode;
-            newNode.next = head;
+            tail = newNode;
+            newNode.next = tail;
             size++;
         } else {
-            Node lastNode = head;
-            while (lastNode.next != head) {
-                lastNode = lastNode.next;
-            }
-            newNode.next = head;
-            lastNode.next = newNode;
-            head = newNode;
+            newNode.next = tail.next;
+            tail.next = newNode;
             size++;
         }
     }
@@ -68,38 +60,26 @@ public class CircularLinkedList {
             return;
         }
         if (index < 1 || index > size) {
-            System.err.print("Index not found");
+            System.err.println("Index not found");
             return;
         }
         if (index == 1) {
             addFirst(data);
         } else {
             Node newNode = new Node(data);
-            Node previousNode = head;
+            Node currNode = tail.next;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.next;
+                currNode = currNode.next;
             }
-            newNode.next = previousNode.next;
-            previousNode.next = newNode;
+            newNode.next = currNode.next;
+            currNode.next = newNode;
             size++;
         }
     }
 
     public void addLast(int data) {
-        Node newNode = new Node(data);
-        if (isEmpty()) {
-            head = newNode;
-            newNode.next = head;
-            size++;
-        } else {
-            Node lastNode = head;
-            while (lastNode.next != head) {
-                lastNode = lastNode.next;
-            }
-            lastNode.next = newNode;
-            newNode.next = head;
-            size++;
-        }
+        addFirst(data);
+        tail = tail.next;
     }
 
     public void removeFirst() {
@@ -110,12 +90,7 @@ public class CircularLinkedList {
         if (size == 1) {
             clear();
         } else {
-            Node lastNode = head;
-            while (lastNode.next != head) {
-                lastNode = lastNode.next;
-            }
-            lastNode.next = head.next;
-            head = head.next;
+            tail.next = tail.next.next;
             size--;
         }
     }
@@ -131,12 +106,14 @@ public class CircularLinkedList {
         }
         if (index == 1) {
             removeFirst();
+        } else if (index == size) {
+            removeLast();
         } else {
-            Node previousNode = head;
+            Node currNode = tail.next;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.next;
+                currNode = currNode.next;
             }
-            previousNode.next = previousNode.next.next;
+            currNode.next = currNode.next.next;
             size--;
         }
     }
@@ -149,11 +126,12 @@ public class CircularLinkedList {
         if (size == 1) {
             clear();
         } else {
-            Node secondLastNode = head;
-            while (secondLastNode.next.next != head) {
-                secondLastNode = secondLastNode.next;
+            Node currNode = tail.next;
+            while (currNode.next != tail) {
+                currNode = currNode.next;
             }
-            secondLastNode.next = head;
+            currNode.next = tail.next;
+            tail = currNode;
             size--;
         }
     }
@@ -162,11 +140,12 @@ public class CircularLinkedList {
         if (isEmpty()) {
             System.err.println("List is empty");
         } else {
-            Node currentNode = head;
-            do {
-                System.out.print(currentNode.data + " ");
-                currentNode = currentNode.next;
-            } while (currentNode != head);
+            Node currNode = tail.next;
+            while (currNode != tail) {
+                System.out.print(currNode.data + " ");
+                currNode = currNode.next;
+            }
+            System.out.print(currNode.data + " ");
             System.out.println();
         }
 
