@@ -1,14 +1,22 @@
 package dataStrcutures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /*
  * addToEmpty(value)
  * deleteNodeByKey(key): Delete the first node with the given value from the list.
  * traverse()
- * search(key)
- * getFirst()
  */
 
-public class CircularLinkedList {
+public class CircularLinkedList implements Iterable<Integer> {
+
+    private class EmptyListException extends RuntimeException {
+        public EmptyListException() {
+            super("List is Empty");
+        }
+    }
+
     private static class Node {
         private int data;
         private Node next;
@@ -136,6 +144,20 @@ public class CircularLinkedList {
         }
     }
 
+    public boolean contains(int data) {
+        if (isEmpty()) {
+            throw new EmptyListException();
+        }
+        Node currNode = tail.next;
+        for (int i = 1; i <= size; i++) {
+            if (currNode.data == data) {
+                return true;
+            }
+            currNode = currNode.next;
+        }
+        return false;
+    }
+
     public void display() {
         if (isEmpty()) {
             System.err.println("List is empty");
@@ -150,4 +172,41 @@ public class CircularLinkedList {
         }
 
     }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return new CLLIterator();
+    }
+
+    private class CLLIterator implements Iterator<Integer> {
+
+        private Node currNode;
+        private boolean visitAgain = false;
+
+        CLLIterator() {
+            if (!isEmpty())
+                currNode = tail.next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (isEmpty() || currNode == tail.next && visitAgain) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public Integer next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            visitAgain = true;
+            int data = currNode.data;
+            currNode = currNode.next;
+            return data;
+        }
+
+    }
+
 }

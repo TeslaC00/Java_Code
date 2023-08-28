@@ -45,7 +45,7 @@ public class DoublyLinkedList {
         return head == null;
     }
 
-    private void clear() {
+    public void clear() {
         head = null;
         tail = null;
         size = 0;

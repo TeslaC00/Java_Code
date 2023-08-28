@@ -159,6 +159,18 @@ public class SingleLinkedList implements Iterable<Integer> {
         }
     }
 
+    public int get(int index){
+        if(isEmpty()) throw new EmptyListException();
+        if(index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index is out of bound");
+        }
+        Node currNode = head;
+        for(int i=1; i<index; i++){
+            currNode = currNode.getNext();
+        }
+        return currNode.getData();
+    }
+
     public void removeValue(int data) {
         if (isEmpty())
             throw new EmptyListException();

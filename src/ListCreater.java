@@ -1,14 +1,16 @@
 import java.util.Scanner;
 
-import dataStrcutures.list.SingleLinkedList;
+// import dataStrcutures.list.CircularLinkedList;
+// import dataStrcutures.list.SingleLinkedList;
+import dataStrcutures.list.DoublyLinkedList;
 
 public class ListCreater {
-    SingleLinkedList list;
+    DoublyLinkedList list;
     boolean running;
     static Scanner scanner;
 
     public ListCreater() {
-        list = new SingleLinkedList();
+        list = new DoublyLinkedList();
     }
 
     public void menu() {
@@ -49,7 +51,7 @@ public class ListCreater {
     }
 
     private void exit() {
-        System.out.println("Sure wanna exit ");
+        System.out.println("Sure wanna exit(y/n)?");
         char ch = scanner.next().charAt(0);
         if (ch == 'Y' || ch == 'y') {
             running = false;
@@ -61,7 +63,7 @@ public class ListCreater {
     private void createList() {
         if (list != null)
             list.clear();
-        list = new SingleLinkedList();
+        list = new DoublyLinkedList();
     }
 
     private void addToList() {
@@ -106,7 +108,9 @@ public class ListCreater {
                 list.removeFirst();
                 break;
             case 2:
-                list.removeMid(choice);
+                System.out.println("Give the index");
+                int index = scanner.nextInt();
+                list.removeMid(index);
                 break;
             case 3:
                 list.removeLast();
