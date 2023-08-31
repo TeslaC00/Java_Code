@@ -3,7 +3,7 @@ import dataStrcutures.stack.*;
 
 class Main {
     public static void main(String[] args) {
-        doublyCircularListTest();
+        listStackTest();
     }
 
     static void doublyCircularListTest(){
@@ -40,6 +40,29 @@ class Main {
         stack.pop();
         stack.display();
         System.out.println(stack.peek());
+        stack.pop();
+        System.out.println(stack.pop());
+        // stack.display();
+        // stack.pop();
+        // stack.display();
+    }
+
+
+    static void listStackTest(){
+        ListStack stack = new ListStack();
+        long start = System.nanoTime();
+        stack.push(4);
+        System.out.println("Time for push is: "+(System.nanoTime()-start));
+        start = System.nanoTime();
+        stack.push(34);
+        System.out.println("Time for push is: "+(System.nanoTime()-start));
+        start = System.nanoTime();
+        stack.push(3);
+        System.out.println("Time for push is: "+(System.nanoTime()-start));
+        start = System.nanoTime();
+        stack.pop();
+        System.out.println("Time for pop is: "+(System.nanoTime()-start));
+        stack.display();
     }
 
     static void circularLinkedTest() {

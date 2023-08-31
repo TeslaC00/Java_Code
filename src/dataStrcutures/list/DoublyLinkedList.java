@@ -1,9 +1,6 @@
 package dataStrcutures.list;
 
 /*
- * insertBefore(node, value)
- * insertAfter(node, value)
- * remove(node)
  * iterateForward()
  * iterateBackward()
  * find(value)

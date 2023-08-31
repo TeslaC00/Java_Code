@@ -13,11 +13,11 @@ public class ArrayStack {
         top = -1;
     }
 
-    public boolean isFull(){
+    public boolean isFull() {
         return top == maxSize;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return top == -1;
     }
 
@@ -35,7 +35,7 @@ public class ArrayStack {
         return array[top--];
     }
 
-    public int peek(){
+    public int peek() {
         return array[top];
     }
 
@@ -45,6 +45,10 @@ public class ArrayStack {
     }
 
     public void display() {
+        if (isEmpty()) {
+            System.err.println("List is empty");
+            return;
+        }
         for (int i = 0; i <= top; i++) {
             System.out.print(array[i] + " ");
         }
