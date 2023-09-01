@@ -1,8 +1,6 @@
 import java.util.Scanner;
 
-// import dataStrcutures.list.CircularLinkedList;
-// import dataStrcutures.list.SingleLinkedList;
-import dataStrcutures.list.DoublyLinkedList;
+import dataStrcutures.list.*;
 
 public class ListCreater {
     DoublyLinkedList list;

@@ -1,9 +1,11 @@
+package test;
+
 import dataStrcutures.list.*;
 import dataStrcutures.stack.*;
 
-class Main {
+class TestList {
     public static void main(String[] args) {
-        listStackTest();
+        doubleListTest();
     }
 
     static void doublyCircularListTest(){
@@ -42,9 +44,6 @@ class Main {
         System.out.println(stack.peek());
         stack.pop();
         System.out.println(stack.pop());
-        // stack.display();
-        // stack.pop();
-        // stack.display();
     }
 
 

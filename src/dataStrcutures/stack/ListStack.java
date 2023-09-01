@@ -23,13 +23,13 @@ public class ListStack {
     }
 
     public int pop() {
-        int data = list.get(1);
+        int data = list.getHead();
         list.removeFirst();
         return data;
     }
 
     public int peek() {
-        return list.get(1);
+        return list.getHead();
     }
 
     public void display() {

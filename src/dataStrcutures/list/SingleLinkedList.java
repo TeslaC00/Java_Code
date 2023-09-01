@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /*
- * get(index)
  * indexOf(data)
  * reverse()
  */
@@ -169,6 +168,11 @@ public class SingleLinkedList implements Iterable<Integer> {
             currNode = currNode.getNext();
         }
         return currNode.getData();
+    }
+
+    public int getHead(){
+        if(!isEmpty()) return head.data;
+        return Integer.MIN_VALUE;
     }
 
     public void removeValue(int data) {
