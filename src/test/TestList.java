@@ -5,10 +5,10 @@ import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        doubleListTest();
+        circularLinkedTest();
     }
 
-    static void doublyCircularListTest(){
+    static void doublyCircularListTest() {
         CircularDoublyLinkedList list = new CircularDoublyLinkedList();
         list.addFirst(1);
         list.addLast(55);
@@ -46,37 +46,32 @@ class TestList {
         System.out.println(stack.pop());
     }
 
-
-    static void listStackTest(){
+    static void listStackTest() {
         ListStack stack = new ListStack();
         long start = System.nanoTime();
         stack.push(4);
-        System.out.println("Time for push is: "+(System.nanoTime()-start));
+        System.out.println("Time for push is: " + (System.nanoTime() - start));
         start = System.nanoTime();
         stack.push(34);
-        System.out.println("Time for push is: "+(System.nanoTime()-start));
+        System.out.println("Time for push is: " + (System.nanoTime() - start));
         start = System.nanoTime();
         stack.push(3);
-        System.out.println("Time for push is: "+(System.nanoTime()-start));
+        System.out.println("Time for push is: " + (System.nanoTime() - start));
         start = System.nanoTime();
         stack.pop();
-        System.out.println("Time for pop is: "+(System.nanoTime()-start));
+        System.out.println("Time for pop is: " + (System.nanoTime() - start));
         stack.display();
     }
 
     static void circularLinkedTest() {
-        CircularLinkedList list = new CircularLinkedList();
+        CircularLinkedList<Integer> list = new CircularLinkedList<Integer>();
         list.addFirst(3);
         list.display();
         list.addLast(999);
         list.display();
-        list.addFirst(6);
-        list.display();
-        list.addFirst(9);
+        list.addFirst(23);
         list.display();
         list.addMid(3, 24202);
-        list.display();
-        list.addMid(4, 4);
         list.display();
         list.removeFirst();
         list.display();
@@ -86,8 +81,8 @@ class TestList {
         list.display();
     }
 
-    static void singleLinkedTest() {
-        SingleLinkedList list = new SingleLinkedList();
+    static void singleListTest() {
+        SingleLinkedList<Integer> list = new SingleLinkedList<Integer>();
         list.addLast(5);
         list.display();
         list.addFirst(1);
@@ -104,25 +99,26 @@ class TestList {
         System.out.println("Size: " + list.size());
         System.out.println(list.toString());
         System.out.println(list.toString().length());
+        System.out.println(list.indexOf(54));
         list.removeValue(54);
         for (Integer i : list) {
             System.out.print(i + " ");
         }
         System.out.println("\nSize: " + list.size());
-        System.out.println(list.contains(1));
+        list.removeValue(3444);
+        System.out.println(list.contains(10));
+        list.set(1, 111);
+        list.display();
+        System.out.println(list);
     }
 
-    static void doubleListTest() {
-        DoublyLinkedList list = new DoublyLinkedList();
+    static void doublyListTest() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
         list.addLast(4);
         list.display();
         list.addFirst(5);
         list.display();
-        list.addLast(63);
-        list.display();
         list.addLast(42);
-        list.display();
-        list.addFirst(0);
         list.display();
         list.addMid(list.size(), 36);
         list.display();
@@ -130,7 +126,20 @@ class TestList {
         list.display();
         list.removeMid(3);
         list.display();
-        list.removeLast();
+        System.out.println(list.contains(42));
+        System.out.println(list.indexOf(42));
+        System.out.println(list.contains(4));
+        System.out.println(list.indexOf(4));
+        list.set(1, 100);
         list.display();
+        System.out.println(list.get(2));
+        list.removeValue(100);
+        list.removeValue(0);
+        list.display();
+        for (Integer integer : list) {
+            System.out.print(integer + " ");
+        }
+        list.removeFirst();
+        System.out.println(list);
     }
 }
