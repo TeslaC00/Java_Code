@@ -5,11 +5,11 @@ import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        circularLinkedTest();
+        doublyCircularListTest();
     }
 
     static void doublyCircularListTest() {
-        CircularDoublyLinkedList list = new CircularDoublyLinkedList();
+        CircularDoublyLinkedList<Integer> list = new CircularDoublyLinkedList<Integer>();
         list.addFirst(1);
         list.addLast(55);
         list.addLast(44);
@@ -24,12 +24,16 @@ class TestList {
         list.display();
         list.addMid(2, 10);
         list.display();
-        list.removeMid(4);
-        list.display();
         list.removeMid(list.size());
         list.display();
         list.removeMid(1);
+        list.set(2, 99);
+        list.removeValue(99);
         list.display();
+        System.out.println(list.get(2));
+        System.out.println(list.contains(0));
+        System.out.println(list.indexOf(-5));
+        System.out.println(list);
     }
 
     static void arrayStackTest() {
@@ -75,10 +79,13 @@ class TestList {
         list.display();
         list.removeFirst();
         list.display();
-        list.removeMid(2);
+        System.out.println(list.contains(99));
+        list.set(2, 1);
         list.display();
-        list.removeLast();
+        System.out.println(list.get(2));
+        list.removeValue(99);
         list.display();
+        System.out.println(list.indexOf(3));
     }
 
     static void singleListTest() {

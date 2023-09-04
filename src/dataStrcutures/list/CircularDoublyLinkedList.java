@@ -1,57 +1,55 @@
 package dataStrcutures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import dataStrcutures.exceptions.EmptyListException;
 
 /*
- * addToEmpty(value)
- * deleteNodeByKey(key)
  * traverseForward()
  * traverseBackward()
- * search(key)
- * getFirst()
- * getLast()
  */
-public class CircularDoublyLinkedList {
+public class CircularDoublyLinkedList<T> implements Iterable<T> {
 
-    private static class Node {
+    private static class Node<T> {
 
-        private int data;
-        private Node next;
-        private Node prev;
+        private T data;
+        private Node<T> next;
+        private Node<T> prev;
 
-        public Node(Node prev, int data, Node next) {
+        public Node(T data) {
             this.data = data;
-            this.next = next;
-            this.prev = prev;
+            this.next = null;
+            this.prev = null;
         }
 
-        public int getData() {
+        public T getData() {
             return data;
         }
 
-        public void setData(int data) {
+        public void setData(T data) {
             this.data = data;
         }
 
-        public Node getNext() {
+        public Node<T> getNext() {
             return next;
         }
 
-        public void setNext(Node next) {
+        public void setNext(Node<T> next) {
             this.next = next;
         }
 
-        public Node getPrev() {
+        public Node<T> getPrev() {
             return prev;
         }
 
-        public void setPrev(Node prev) {
+        public void setPrev(Node<T> prev) {
             this.prev = prev;
         }
     }
 
     private int size;
-    private Node head;
+    private Node<T> head;
 
     public CircularDoublyLinkedList() {
         head = null;
@@ -71,14 +69,17 @@ public class CircularDoublyLinkedList {
         size = 0;
     }
 
-    public void addFirst(int data) {
+    public void addFirst(T data) {
+        Node<T> newNode = new Node<T>(data);
         if (isEmpty()) {
-            head = new Node(head, data, head);
+            newNode.setNext(newNode);
+            newNode.setPrev(newNode);
+            head = newNode;
             size++;
             return;
         }
-
-        Node newNode = new Node(head.getPrev(), data, head);
+        newNode.setNext(head);
+        newNode.setPrev(head.getPrev());
         head.getPrev().setNext(newNode);
         head.setPrev(newNode);
         head = newNode;
@@ -87,7 +88,7 @@ public class CircularDoublyLinkedList {
     }
 
     /** Index starts from 1 */
-    public void addMid(int index, int data) {
+    public void addMid(int index, T data) {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -100,18 +101,20 @@ public class CircularDoublyLinkedList {
             addFirst(data);
             return;
         }
-        Node currNode = head;
+        Node<T> currNode = head;
         for (int i = 1; i < index - 1; i++) {
             currNode = currNode.getNext();
         }
-        Node newNode = new Node(currNode, data, currNode.getNext());
+        Node<T> newNode = new Node<T>(data);
+        newNode.setPrev(currNode);
+        newNode.setNext(currNode.getNext());
         currNode.getNext().setPrev(newNode);
         currNode.setNext(newNode);
         size++;
 
     }
 
-    public void addLast(int data) {
+    public void addLast(T data) {
         addFirst(data);
         if (!isEmpty())
             head = head.getNext();
@@ -149,7 +152,7 @@ public class CircularDoublyLinkedList {
             return;
         }
 
-        Node currNode = head;
+        Node<T> currNode = head;
         for (int i = 1; i < index - 1; i++) {
             currNode = currNode.getNext();
         }
@@ -173,103 +176,139 @@ public class CircularDoublyLinkedList {
         size--;
     }
 
-    // public boolean contains(T data) {
-    //     if (isEmpty())
-    //         throw new EmptyListException();
+    public boolean contains(T data) {
+        if (isEmpty())
+            throw new EmptyListException();
 
-    //     Node<T> currentNode = tail.getNext();
-    //     for (int i = 1; i <= size; i++) {
-    //         if (currentNode.getData() == data) {
-    //             return true;
-    //         }
-    //         currentNode = currentNode.getNext();
-    //     }
-    //     return false;
-    // }
+        // Node<T> currentNode = tail.getNext();
+        // for (int i = 1; i <= size; i++) {
+        // if (currentNode.getData() == data) {
+        // return true;
+        // }
+        // currentNode = currentNode.getNext();
+        // }
+        return indexOf(data) != -1;
+    }
 
-    // /** Index starts from 1 */
-    // public void set(int index, T data) {
-    //     if (isEmpty())
-    //         throw new EmptyListException();
-    //     if (index < 1 || index > size)
-    //         throw new IndexOutOfBoundsException("Index out of bound");
-    //     Node<T> currentNode = tail.getNext();
-    //     for (int i = 1; i < index; i++) {
-    //         currentNode = currentNode.getNext();
-    //     }
-    //     currentNode.setData(data);
-    // }
+    /** Index starts from 1 */
+    public void set(int index, T data) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (index < 1 || index > size)
+            throw new IndexOutOfBoundsException("Index out of bound");
+        Node<T> currentNode = head;
+        for (int i = 1; i < index; i++) {
+            currentNode = currentNode.getNext();
+        }
+        currentNode.setData(data);
+    }
 
-    // /** Index starts from 1 */
-    // public T get(int index) {
-    //     if (isEmpty())
-    //         throw new EmptyListException();
-    //     if (index < 1 || index > size)
-    //         throw new IndexOutOfBoundsException("Index out of bound");
-    //     Node<T> currentNode = tail.getNext();
-    //     for (int i = 1; i < index; i++) {
-    //         currentNode = currentNode.getNext();
-    //     }
-    //     return currentNode.getData();
-    // }
+    /** Index starts from 1 */
+    public T get(int index) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (index < 1 || index > size)
+            throw new IndexOutOfBoundsException("Index out of bound");
+        Node<T> currentNode = head;
+        for (int i = 1; i < index; i++) {
+            currentNode = currentNode.getNext();
+        }
+        return currentNode.getData();
+    }
 
-    // /** Index starts from 1 */
-    // public int indexOf(T data) {
-    //     if (isEmpty())
-    //         throw new EmptyListException();
+    /** Index starts from 1 */
+    public int indexOf(T data) {
+        if (isEmpty())
+            throw new EmptyListException();
 
-    //     int index = 1;
-    //     Node<T> currentNode = tail.getNext();
-    //     do {
-    //         if (currentNode.getData() == data) {
-    //             return index;
-    //         }
-    //         currentNode = currentNode.getNext();
-    //         index++;
-    //     } while (currentNode != tail.getNext());
-    //     return -1;
-    // }
+        int index = 1;
+        Node<T> currentNode = head;
+        do {
+            if (currentNode.getData() == data) {
+                return index;
+            }
+            currentNode = currentNode.getNext();
+            index++;
+        } while (currentNode != head);
+        return -1;
+    }
 
-    // public void removeValue(T data) {
-    //     if (isEmpty())
-    //         throw new EmptyListException();
-    //     if (tail.getData() == data) {
-    //         removeLast();
-    //         return;
-    //     }
-    //     Node<T> currentNode = tail;
-    //     do {
-    //         if (currentNode.getData() == data) {
-    //             currentNode.setNext(currentNode.getNext().getNext());
-    //             size--;
-    //         }
-    //         currentNode = currentNode.getNext();
-    //     } while (currentNode != tail);
-    // }
+    public void removeValue(T data) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (head.getData() == data) {
+            removeFirst();
+            return;
+        }
+        if (head.getPrev().getData() == data) {
+            removeLast();
+            return;
+        }
+        Node<T> currentNode = head;
+        do {
+            if (currentNode.getNext().getData() == data) {
+                currentNode.setNext(currentNode.getNext().getNext());
+                currentNode.getNext().getNext().setPrev(currentNode);
+                size--;
+            }
+            currentNode = currentNode.getNext();
+        } while (currentNode != head);
+    }
 
-    // /** Elements are seperated by space */
-    // @Override
-    // public String toString() {
-    //     if (isEmpty())
-    //         return "";
+    /** Elements are seperated by space */
+    @Override
+    public String toString() {
+        if (isEmpty())
+            return "";
 
-    //     StringBuilder strBuilder = new StringBuilder();
-    //     for (T data : this) {
-    //         strBuilder.append(data + " ");
-    //     }
-    //     return strBuilder.toString();
-    // }
+        StringBuilder strBuilder = new StringBuilder();
+        for (T data : this) {
+            strBuilder.append(data + " ");
+        }
+        return strBuilder.toString();
+    }
 
     public void display() {
         if (isEmpty()) {
             throw new EmptyListException();
         }
-
-        Node currNode = head;
-        do {
-            System.out.print(currNode.data + " ");
-            currNode = currNode.next;
-        } while (currNode != head);
+        for (T data : this) {
+            System.out.print(data + " ");
+        }
         System.out.println();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new CircularDoublyListIterator();
+    }
+
+    private class CircularDoublyListIterator implements Iterator<T> {
+
+        private Node<T> currentNode;
+        private boolean visited = false;
+
+        public CircularDoublyListIterator() {
+            if (!isEmpty()) {
+                currentNode = head;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (!isEmpty() ^ (currentNode == head && visited));
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            visited = true;
+            T data = currentNode.getData();
+            currentNode = currentNode.getNext();
+            return data;
+        }
+
     }
 }

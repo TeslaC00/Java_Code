@@ -5,10 +5,6 @@ import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * addToEmpty(value)
- */
-
 public class CircularLinkedList<T> implements Iterable<T> {
 
     private static class Node<T> {
@@ -159,14 +155,14 @@ public class CircularLinkedList<T> implements Iterable<T> {
         if (isEmpty())
             throw new EmptyListException();
 
-        Node<T> currentNode = tail.getNext();
-        for (int i = 1; i <= size; i++) {
-            if (currentNode.getData() == data) {
-                return true;
-            }
-            currentNode = currentNode.getNext();
-        }
-        return false;
+        // Node<T> currentNode = tail.getNext();
+        // for (int i = 1; i <= size; i++) {
+        // if (currentNode.getData().equals(data)) {
+        // return true;
+        // }
+        // currentNode = currentNode.getNext();
+        // }
+        return indexOf(data) != -1;
     }
 
     /** Index starts from 1 */
@@ -203,7 +199,7 @@ public class CircularLinkedList<T> implements Iterable<T> {
         int index = 1;
         Node<T> currentNode = tail.getNext();
         do {
-            if (currentNode.getData() == data) {
+            if (currentNode.getData().equals(data)) {
                 return index;
             }
             currentNode = currentNode.getNext();
@@ -215,13 +211,13 @@ public class CircularLinkedList<T> implements Iterable<T> {
     public void removeValue(T data) {
         if (isEmpty())
             throw new EmptyListException();
-        if (tail.getData() == data) {
+        if (tail.getData().equals(data)) {
             removeLast();
             return;
         }
         Node<T> currentNode = tail;
         do {
-            if (currentNode.getData() == data) {
+            if (currentNode.getNext().getData().equals(data)) {
                 currentNode.setNext(currentNode.getNext().getNext());
                 size--;
             }
