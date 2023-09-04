@@ -2,13 +2,17 @@ package dataStrcutures.stack;
 
 public class ArrayStack {
 
-    private final int DEFAULT_SIZE = 16;
-    int array[];
-    int maxSize;
-    int top;
+    private final static int DEFAULT_SIZE = 16;
+    private int array[];
+    private int maxSize;
+    private int top;
 
     public ArrayStack() {
-        maxSize = DEFAULT_SIZE;
+        this(DEFAULT_SIZE);
+    }
+
+    public ArrayStack(int size) {
+        maxSize = size;
         array = new int[maxSize];
         top = -1;
     }

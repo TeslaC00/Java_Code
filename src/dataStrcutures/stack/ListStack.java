@@ -4,7 +4,7 @@ import dataStrcutures.list.SingleLinkedList;
 
 public class ListStack<T> {
 
-    SingleLinkedList<T> list;
+    private SingleLinkedList<T> list;
 
     public ListStack() {
         list = new SingleLinkedList<T>();
