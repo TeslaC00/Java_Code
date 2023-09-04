@@ -5,13 +5,13 @@ import dataStrcutures.stack.ListStack;
 
 public class PostFix {
 
-    private ListStack stack;
+    private ListStack<Integer> stack;
     private String expression;
     private HashSet<String> OPERATORS = new HashSet<>(Set.of("+","-","*","/","^"));
 
     public PostFix(String expression) {
         this.expression = expression;
-        stack = new ListStack();
+        stack = new ListStack<Integer>();
     }
 
     public int evaluate() {

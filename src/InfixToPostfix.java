@@ -1,17 +1,18 @@
-import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Set;
+
+import dataStrcutures.stack.ListStack;
 
 public class InfixToPostfix {
 
     private String expression;
-    private ArrayDeque<String> stack;
+    private ListStack<String> stack;
     private StringBuilder output = new StringBuilder();
     private final HashSet<String> OPERATORS = new HashSet<>(Set.of("+", "-", "*", "/", "^", "(", ")"));
 
     public InfixToPostfix(String expression) {
         setExpression(expression);
-        stack = new ArrayDeque<>();
+        stack = new ListStack<>();
     }
 
     public void setExpression(String expression) {
@@ -22,7 +23,7 @@ public class InfixToPostfix {
         String[] tokens = expression.split(" ");
         for (String token : tokens) {
             if (isOperator(token))
-                evalOperator(token);
+                handleOperator(token);
             else
                 output.append(token + " ");
         }
@@ -33,7 +34,7 @@ public class InfixToPostfix {
         return output.toString();
     }
 
-    private void evalOperator(String token) {
+    private void handleOperator(String token) {
 
         int valStack = precedence(stack.peek());
         int valToken = precedence(token);

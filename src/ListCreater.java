@@ -3,12 +3,12 @@ import java.util.Scanner;
 import dataStrcutures.list.*;
 
 public class ListCreater {
-    DoublyLinkedList list;
+    DoublyLinkedList<Integer> list;
     boolean running;
     static Scanner scanner;
 
     public ListCreater() {
-        list = new DoublyLinkedList();
+        list = new DoublyLinkedList<Integer>();
     }
 
     public void menu() {
@@ -61,7 +61,7 @@ public class ListCreater {
     private void createList() {
         if (list != null)
             list.clear();
-        list = new DoublyLinkedList();
+        list = new DoublyLinkedList<Integer>();
     }
 
     private void addToList() {

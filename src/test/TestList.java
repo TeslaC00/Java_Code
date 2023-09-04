@@ -5,7 +5,7 @@ import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        doublyCircularListTest();
+        arrayStackTest();
     }
 
     static void doublyCircularListTest() {
@@ -51,19 +51,11 @@ class TestList {
     }
 
     static void listStackTest() {
-        ListStack stack = new ListStack();
-        long start = System.nanoTime();
+        ListStack<Integer> stack = new ListStack<Integer>();
         stack.push(4);
-        System.out.println("Time for push is: " + (System.nanoTime() - start));
-        start = System.nanoTime();
         stack.push(34);
-        System.out.println("Time for push is: " + (System.nanoTime() - start));
-        start = System.nanoTime();
         stack.push(3);
-        System.out.println("Time for push is: " + (System.nanoTime() - start));
-        start = System.nanoTime();
         stack.pop();
-        System.out.println("Time for pop is: " + (System.nanoTime() - start));
         stack.display();
     }
 
