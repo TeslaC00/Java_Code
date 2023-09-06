@@ -5,7 +5,7 @@ import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        arrayStackTest();
+        singleListTest();
     }
 
     static void doublyCircularListTest() {
@@ -90,6 +90,7 @@ class TestList {
         list.display();
         list.removeMid(list.size());
         list.display();
+        list.reverse();
         list.removeLast();
         list.display();
         list.addLast(6);
