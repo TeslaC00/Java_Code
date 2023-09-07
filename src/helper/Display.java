@@ -1,3 +1,5 @@
+package helper;
+
 public class Display {
 
     public static <T> void array(T a[]){

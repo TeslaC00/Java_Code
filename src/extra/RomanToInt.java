@@ -1,4 +1,6 @@
-class Solution {
+package extra;
+
+public class RomanToInt {
     public int romanToInt(String s) {
         int num=0;
         for(int i=0; i<s.length(); i++){

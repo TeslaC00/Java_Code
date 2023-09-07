@@ -1,54 +1,46 @@
 package dataStrcutures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import dataStrcutures.exceptions.EmptyListException;
+
 /*
- * get(index)
- * indexOf(data)
- * insertAfter(node, data)
- * insertBefore(node, data)
- * remove(data)
  * reverse()
- * toArray()
- * iterator()
- * toString()
  */
 
-public class SingleLinkedList {
+public class SingleLinkedList<T> implements Iterable<T> {
 
-    private class EmptyListException extends RuntimeException {
-        public EmptyListException() {
-            super("List is empty");
-        }
-    }
+    private static class Node<T> {
 
-    private static class Node {
-        private int data;
-        private Node next;
+        private T data;
+        private Node<T> next;
 
-        public Node(int data) {
+        private Node(T data, Node<T> next) {
             this.data = data;
-            this.next = null;
+            this.next = next;
         }
 
-        public int getData() {
+        private T getData() {
             return data;
         }
 
-        public void setData(int data) {
+        private void setData(T data) {
             this.data = data;
         }
 
-        public Node getNext() {
+        private Node<T> getNext() {
             return next;
         }
 
-        public void setNext(Node next) {
+        private void setNext(Node<T> next) {
             this.next = next;
         }
 
     }
 
     private int size;
-    private Node head;
+    private Node<T> head;
 
     public SingleLinkedList() {
         head = null;
@@ -68,19 +60,14 @@ public class SingleLinkedList {
         size = 0;
     }
 
-    public void addFirst(int data) {
-        Node newNode = new Node(data);
-        if (isEmpty()) {
-            head = newNode;
-        } else {
-            newNode.setNext(head);
-            head = newNode;
-        }
+    public void addFirst(T data) {
+        Node<T> newNode = new Node<T>(data, head);
+        head = newNode;
         size++;
     }
 
     /** Index starts from 1 */
-    public void addMid(int index, int data) {
+    public void addMid(int index, T data) {
         if (isEmpty())
             throw new EmptyListException();
 
@@ -90,27 +77,29 @@ public class SingleLinkedList {
         if (index == 1)
             addFirst(data);
         else {
-            Node newNode = new Node(data);
-            Node previousNode = head;
+            Node<T> currentNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.getNext();
+                currentNode = currentNode.getNext();
             }
-            newNode.setNext(previousNode.getNext());
-            previousNode.setNext(newNode);
+            Node<T> newNode = new Node<T>(data, currentNode.getNext());
+            currentNode.setNext(newNode);
             size++;
         }
     }
 
-    public void addLast(int data) {
-        Node newNode = new Node(data);
+    public void addLast(T data) {
+        Node<T> newNode = new Node<T>(data, null);
         if (isEmpty()) {
             head = newNode;
         } else {
-            Node lastNode = head;
-            while (lastNode.getNext() != null) {
-                lastNode = lastNode.getNext();
-            }
-            lastNode.setNext(newNode);
+            // Node lastNode = head;
+            // while (lastNode.getNext() != null) {
+            // lastNode = lastNode.getNext();
+            // }
+            Node<T> currentNode, nextNode;
+            for (currentNode = head; (nextNode = currentNode.getNext()) != null; currentNode = nextNode)
+                ;
+            currentNode.setNext(newNode);
         }
         size++;
     }
@@ -119,12 +108,8 @@ public class SingleLinkedList {
         if (isEmpty())
             throw new EmptyListException();
 
-        if (size == 1) {
-            clear();
-        } else {
-            head = head.getNext();
-            size--;
-        }
+        head = head.getNext();
+        size--;
     }
 
     /** Index starts from 1 */
@@ -139,11 +124,11 @@ public class SingleLinkedList {
             removeFirst();
 
         else {
-            Node previousNode = head;
+            Node<T> currentNode = head;
             for (int i = 1; i < index - 1; i++) {
-                previousNode = previousNode.getNext();
+                currentNode = currentNode.getNext();
             }
-            previousNode.setNext(previousNode.getNext().getNext());
+            currentNode.setNext(currentNode.getNext().getNext());
             size--;
         }
     }
@@ -154,48 +139,143 @@ public class SingleLinkedList {
         if (size == 1) {
             clear();
         } else {
-            Node secondLastNode = head;
-            while (secondLastNode.getNext().getNext() != null) {
-                secondLastNode = secondLastNode.getNext();
+            Node<T> currentNode = head;
+            while (currentNode.getNext().getNext() != null) {
+                currentNode = currentNode.getNext();
             }
-            secondLastNode.setNext(null);
+            currentNode.setNext(null);
             size--;
         }
     }
 
-    public boolean contains(int value) {
+    public T get(int index) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index is out of bound");
+        }
+        Node<T> currentNode = head;
+        for (int i = 1; i < index; i++) {
+            currentNode = currentNode.getNext();
+        }
+        return currentNode.getData();
+    }
+
+    public T getHead() {
+        if (!isEmpty())
+            return head.data;
+        return null;
+    }
+
+    public void removeValue(T data) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (head.getData() == data) {
+            removeFirst();
+            return;
+        }
+        Node<T> currentNode = head;
+        while (currentNode.getNext() != null) {
+            if (currentNode.getNext().getData() == data) {
+                currentNode.setNext(currentNode.getNext().getNext());
+                size--;
+                return;
+            }
+            currentNode = currentNode.getNext();
+        }
+
+    }
+
+    public boolean contains(T data) {
         if (isEmpty())
             throw new EmptyListException();
 
-        Node currentNode = head;
+        Node<T> currentNode = head;
         while (currentNode != null) {
-            if (currentNode.getData() == value)
+            if (currentNode.getData() == data)
                 return true;
             currentNode = currentNode.getNext();
         }
         return false;
     }
 
+    public int indexOf(T data) {
+        if (isEmpty())
+            throw new EmptyListException();
+
+        Node<T> currentNode = head;
+        int index = 1;
+        while (currentNode != null) {
+            if (currentNode.getData() == data)
+                return index;
+            currentNode = currentNode.getNext();
+            index++;
+        }
+        return -1;
+    }
+
     /** Index starts from 1 */
-    public void set(int index, int value) {
-        if (index > size)
+    public void set(int index, T data) {
+        if (isEmpty())
+            throw new EmptyListException();
+        if (index < 1 || index > size)
             throw new IndexOutOfBoundsException("Index is out of bound");
-        Node currentNode = head;
+        Node<T> currentNode = head;
         for (int i = 1; i < index; i++) {
             currentNode = currentNode.getNext();
         }
-        currentNode.setData(value);
+        currentNode.setData(data);
+    }
+
+    /** Elements are seperated by space in the string returned */
+    @Override
+    public String toString() {
+        if (isEmpty())
+            return "";
+        StringBuilder strBuilder = new StringBuilder();
+        for (T i : this) {
+            strBuilder.append(i + " ");
+        }
+        return strBuilder.toString();
     }
 
     public void display() {
         if (isEmpty())
             throw new EmptyListException();
-        Node currentNode = head;
-        while (currentNode != null) {
-            System.out.print(currentNode.data + " ");
-            currentNode = currentNode.getNext();
+        for (T i : this) {
+            System.out.print(i + " ");
         }
         System.out.println();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<T> {
+
+        private Node<T> currentNode;
+
+        public ListIterator() {
+            currentNode = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            T data = currentNode.getData();
+            currentNode = currentNode.getNext();
+            return data;
+        }
+
     }
 
 }
