@@ -36,6 +36,9 @@ build/
 # Javadoc files
 target/site/apidocs/
 
+# Test Folder
+tests/
+
 # Other generated files
 bin/
 out/
