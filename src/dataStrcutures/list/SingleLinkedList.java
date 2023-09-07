@@ -227,6 +227,21 @@ public class SingleLinkedList<T> implements Iterable<T> {
         currentNode.setData(data);
     }
 
+    public void reverse(){
+        Node<T> prevNode = null;
+        Node<T> currentNode = head;
+        Node<T> nextNode = null;
+
+        while(currentNode != null){
+            nextNode = currentNode.getNext();
+            currentNode.setNext(prevNode);
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+
+        head = prevNode;
+    }
+
     /** Elements are seperated by space in the string returned */
     @Override
     public String toString() {
