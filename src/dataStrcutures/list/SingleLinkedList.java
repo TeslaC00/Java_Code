@@ -5,10 +5,6 @@ import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * reverse()
- */
-
 public class SingleLinkedList<T> implements Iterable<T> {
 
     private static class Node<T> {
@@ -71,11 +67,15 @@ public class SingleLinkedList<T> implements Iterable<T> {
         if (isEmpty())
             throw new EmptyListException();
 
-        if (index < 1 || index > size)
+        if (index < 1 || index > size+1)
             throw new IndexOutOfBoundsException("Index is out of bound");
 
         if (index == 1)
             addFirst(data);
+
+        else if (index == size)
+            addLast(data);
+
         else {
             Node<T> currentNode = head;
             for (int i = 1; i < index - 1; i++) {
@@ -227,12 +227,12 @@ public class SingleLinkedList<T> implements Iterable<T> {
         currentNode.setData(data);
     }
 
-    public void reverse(){
+    public void reverse() {
         Node<T> prevNode = null;
         Node<T> currentNode = head;
         Node<T> nextNode = null;
 
-        while(currentNode != null){
+        while (currentNode != null) {
             nextNode = currentNode.getNext();
             currentNode.setNext(prevNode);
             prevNode = currentNode;

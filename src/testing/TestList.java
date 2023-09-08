@@ -1,11 +1,11 @@
-package test;
+package testing;
 
 import dataStrcutures.list.*;
 import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        singleListTest();
+        listStackTest();
     }
 
     static void doublyCircularListTest() {
