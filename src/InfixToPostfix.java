@@ -20,10 +20,10 @@ public class InfixToPostfix {
     }
 
     public String evaluate() {
-        String[] tokens = expression.split(" ");
+        String[] tokens = expression.split("");
         for (String token : tokens) {
             if (isOperator(token))
-                handleOperator(token);
+                handleOperator(token, "(", ")");
             else
                 output.append(token + " ");
         }
@@ -34,20 +34,22 @@ public class InfixToPostfix {
         return output.toString();
     }
 
-    private void handleOperator(String token) {
+    private void handleOperator(String token, String startBracket, String endBracket) {
 
         int valStack = precedence(stack.peek());
         int valToken = precedence(token);
 
-        if (token.equals(")")) {
-            while (!stack.peek().equals("(")) {
+        if (token.equals(endBracket)) {
+            while (!stack.peek().equals(startBracket)) {
                 output.append(stack.pop() + " ");
             }
             stack.pop();
             return;
         }
-        if (!token.equals("(") && valStack > valToken)
+        while (!token.equals(startBracket) && valStack > valToken) {
             output.append(stack.pop() + " ");
+            valStack = precedence(stack.peek());
+        }
 
         stack.push(token);
 
