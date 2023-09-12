@@ -1,6 +1,3 @@
-import java.util.HashSet;
-import java.util.Set;
-
 import dataStrcutures.stack.ListStack;
 
 public class InfixConverter {
@@ -8,7 +5,7 @@ public class InfixConverter {
     private String expression;
     private StringBuilder output;
     private final ListStack<String> stack;
-    private final HashSet<String> OPERATORS = new HashSet<>(Set.of("+", "-", "*", "/", "^", "(", ")"));
+    private final String OPERATORS = "+-*/^";
 
     public InfixConverter() {
         stack = new ListStack<>();
@@ -40,11 +37,11 @@ public class InfixConverter {
             if (isOperator(token))
                 handleOperator(token, startBracket, endBracket);
             else
-                output.append(token+" ");
+                output.append(token + " ");
         }
 
         while (!stack.isEmpty()) {
-            output.append(stack.pop()+" ");
+            output.append(stack.pop() + " ");
         }
         return output.toString();
     }
@@ -53,7 +50,7 @@ public class InfixConverter {
 
         if (token.equals(endBracket)) {
             while (!stack.peek().equals(startBracket)) {
-                output.append(stack.pop()+" ");
+                output.append(stack.pop() + " ");
             }
             stack.pop();
             return;
@@ -63,7 +60,7 @@ public class InfixConverter {
         int valToken = precedence(token);
 
         while (!token.equals(startBracket) && valStack > valToken) {
-            output.append(stack.pop()+" ");
+            output.append(stack.pop() + " ");
             valStack = precedence(stack.peek());
         }
 
