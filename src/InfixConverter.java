@@ -6,8 +6,8 @@ import dataStrcutures.stack.ListStack;
 public class InfixConverter {
 
     private String expression;
-    private ListStack<String> stack;
     private StringBuilder output;
+    private final ListStack<String> stack;
     private final HashSet<String> OPERATORS = new HashSet<>(Set.of("+", "-", "*", "/", "^", "(", ")"));
 
     public InfixConverter() {
@@ -31,8 +31,7 @@ public class InfixConverter {
     public String evaluateToPrefix() {
         output = new StringBuilder();
         setExpression(reverseString(expression));
-        String prefix = evaluate(")", "(");
-        return reverseString(prefix);
+        return reverseString(evaluate(")", "("));
     }
 
     private String evaluate(String startBracket, String endBracket) {
