@@ -9,14 +9,15 @@ public class Demo {
         // listCreater.menu();
         
         // Infix to Postfix
-        InfixToPostfix demo = new InfixToPostfix("A*(B+D)/E-F*(G+H/K)"); // Ans:117
-        System.out.println(demo.evaluate());
+        InfixConverter demo = new InfixConverter("A * ( B + D ) / E - F * ( G + H / K )"); // Ans:117
+        // A B D + E / * F G H K / + * - 
+        System.out.println(demo.evaluateToPostfix());
         // PostFix postFix = new PostFix(demo.evaluate());
         // System.out.println(postFix.evaluate());
         
         // Infix to Prefix
-        // InfixToPrefix demo = new InfixToPrefix("A*(B+D)/E-F*(G+H/K)");
-        // System.out.println(demo.evaluate());
+        // - / * A + B D E * F + G / H K
+        System.out.println(demo.evaluateToPrefix());
 
         // Reverse String using stack
         // System.out.println(reverse("This is a test sentence"));
