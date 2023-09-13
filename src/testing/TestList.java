@@ -1,11 +1,23 @@
 package testing;
 
 import dataStrcutures.list.*;
+import dataStrcutures.queue.ArrayQueue;
 import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        listStackTest();
+        arrayQueueTest();
+    }
+
+    static void arrayQueueTest(){
+        ArrayQueue queue = new ArrayQueue(3);
+        queue.enqueue(0);
+        queue.enqueue(5);
+        queue.enqueue(10);
+        queue.display();
+        queue.enqueue(10);
+        queue.dequeue();
+        queue.display();
     }
 
     static void doublyCircularListTest() {

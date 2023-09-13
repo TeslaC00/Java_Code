@@ -18,7 +18,7 @@ public class ArrayStack {
     }
 
     public boolean isFull() {
-        return top == maxSize;
+        return top == maxSize-1;
     }
 
     public boolean isEmpty() {
@@ -34,7 +34,7 @@ public class ArrayStack {
 
     public int pop() {
         if (top == -1) {
-            return -1;
+            return Integer.MIN_VALUE;
         }
         return array[top--];
     }

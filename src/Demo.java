@@ -9,11 +9,11 @@ public class Demo {
         // listCreater.menu();
         
         // Infix to Postfix
-        InfixConverter demo = new InfixConverter("A * ( B + D ) / E - F * ( G + H / K )"); // Ans:117
+        InfixConverter demo = new InfixConverter("4 + 5 * ( 6 - 2 ) / 2"); // Ans:117
         // A B D + E / * F G H K / + * - 
         System.out.println(demo.evaluateToPostfix());
-        // PostFix postFix = new PostFix(demo.evaluate());
-        // System.out.println(postFix.evaluate());
+        PostFix postFix = new PostFix(demo.evaluateToPostfix());
+        System.out.println(postFix.evaluate());
         
         // Infix to Prefix
         // - / * A + B D E * F + G / H K

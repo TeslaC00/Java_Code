@@ -5,7 +5,7 @@ public class InfixConverter {
     private String expression;
     private StringBuilder output;
     private final ListStack<String> stack;
-    private final String OPERATORS = "+-*/^";
+    private final String OPERATORS = "+-*/^()";
 
     public InfixConverter() {
         stack = new ListStack<>();
