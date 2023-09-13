@@ -18,6 +18,8 @@ public class Demo {
         // Infix to Prefix
         // - / * A + B D E * F + G / H K
         System.out.println(demo.evaluateToPrefix());
+        Prefix prefix = new Prefix(demo.evaluateToPrefix());
+        System.out.println(prefix.evaluate());
 
         // Reverse String using stack
         // System.out.println(reverse("This is a test sentence"));

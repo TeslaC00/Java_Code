@@ -42,7 +42,7 @@ public class PostFix {
             case "^":
                 return (int) Math.pow(a, b);
             default:
-                throw new IllegalArgumentException("Token not found");
+                throw new IllegalArgumentException("Token not valid");
         }
     }
 

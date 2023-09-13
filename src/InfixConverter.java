@@ -22,16 +22,16 @@ public class InfixConverter {
 
     public String evaluateToPostfix() {
         output = new StringBuilder();
-        return evaluate("(", ")");
+        return evaluate(expression, "(", ")");
     }
 
     public String evaluateToPrefix() {
         output = new StringBuilder();
-        setExpression(reverseString(expression));
-        return reverseString(evaluate(")", "("));
+        String reversedString = reverseString(expression);
+        return reverseString(evaluate(reversedString, ")", "("));
     }
 
-    private String evaluate(String startBracket, String endBracket) {
+    private String evaluate(String expression, String startBracket, String endBracket) {
         String[] tokens = expression.split(" ");
         for (String token : tokens) {
             if (isOperator(token))
@@ -43,7 +43,7 @@ public class InfixConverter {
         while (!stack.isEmpty()) {
             output.append(stack.pop() + " ");
         }
-        return output.toString();
+        return output.toString().trim();
     }
 
     private void handleOperator(String token, String startBracket, String endBracket) {
@@ -92,10 +92,6 @@ public class InfixConverter {
     }
 
     private String reverseString(String expression) {
-        StringBuilder reversed = new StringBuilder();
-        for (int i = expression.length() - 1; i >= 0; i--) {
-            reversed.append(expression.charAt(i));
-        }
-        return reversed.toString();
+        return new StringBuilder(expression).reverse().toString();
     }
 }
