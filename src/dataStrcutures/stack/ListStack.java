@@ -22,6 +22,10 @@ public class ListStack<T> implements Iterable<T> {
         list.clear();
     }
 
+    public int size() {
+        return list.size();
+    }
+
     public void push(T data) {
         list.addFirst(data);
     }
