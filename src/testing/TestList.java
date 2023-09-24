@@ -9,7 +9,7 @@ import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        circularLinkedTest();
+        listStackTest();
     }
 
     static void circularQueueTest() {
@@ -21,7 +21,7 @@ class TestList {
         queue.enqueue(3);
     }
 
-    static void arrayQueueTest(){
+    static void arrayQueueTest() {
         ArrayQueue queue = new ArrayQueue(3);
         queue.enqueue(0);
         queue.enqueue(5);
@@ -81,6 +81,8 @@ class TestList {
         stack.push(3);
         stack.pop();
         stack.display();
+        stack.addAll(Arrays.asList(1, 2, 3, 4, 5, 6), true);
+        stack.display();
     }
 
     static void circularLinkedTest() {
@@ -106,8 +108,8 @@ class TestList {
 
     static void singleListTest() {
         SingleLinkedList<Integer> list = new SingleLinkedList<Integer>();
-        Integer[] arr = {1, 2, 3, 4, 5};
-        list.addAll(Arrays.asList(arr),true);
+        Integer[] arr = { 1, 2, 3, 4, 5 };
+        list.addAll(Arrays.asList(arr), true);
         list.display();
         list.addLast(5);
         list.display();
@@ -169,8 +171,8 @@ class TestList {
         list.removeFirst();
         System.out.println(list);
         DoublyLinkedList<Integer> list2 = new DoublyLinkedList<>();
-        Integer[] arr = {1, 2, 3, 4};
+        Integer[] arr = { 1, 2, 3, 4 };
         list2.addAll(Arrays.asList(arr));
-        list2.display(); 
+        list2.display();
     }
 }

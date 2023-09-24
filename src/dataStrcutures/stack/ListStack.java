@@ -1,5 +1,6 @@
 package dataStrcutures.stack;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -33,6 +34,14 @@ public class ListStack<T> implements Iterable<T> {
 
     public T peek() {
         return list.getHead();
+    }
+
+    public void addAll(Collection<T> collection) {
+        list.addAll(collection);
+    }
+
+    public void addAll(Collection<T> collection, boolean reverse) {
+        list.addAll(collection, reverse);
     }
 
     public void display() {
