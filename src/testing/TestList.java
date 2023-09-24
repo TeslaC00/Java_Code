@@ -1,12 +1,24 @@
 package testing;
 
+import java.util.Arrays;
+
 import dataStrcutures.list.*;
 import dataStrcutures.queue.ArrayQueue;
+import dataStrcutures.queue.CircularQueue;
 import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        arrayQueueTest();
+        circularLinkedTest();
+    }
+
+    static void circularQueueTest() {
+        CircularQueue queue = new CircularQueue(3);
+        queue.enqueue(1);
+        queue.enqueue(22);
+        queue.enqueue(3);
+        queue.display();
+        queue.enqueue(3);
     }
 
     static void arrayQueueTest(){
@@ -94,6 +106,9 @@ class TestList {
 
     static void singleListTest() {
         SingleLinkedList<Integer> list = new SingleLinkedList<Integer>();
+        Integer[] arr = {1, 2, 3, 4, 5};
+        list.addAll(Arrays.asList(arr),true);
+        list.display();
         list.addLast(5);
         list.display();
         list.addFirst(1);
@@ -153,5 +168,9 @@ class TestList {
         }
         list.removeFirst();
         System.out.println(list);
+        DoublyLinkedList<Integer> list2 = new DoublyLinkedList<>();
+        Integer[] arr = {1, 2, 3, 4};
+        list2.addAll(Arrays.asList(arr));
+        list2.display(); 
     }
 }

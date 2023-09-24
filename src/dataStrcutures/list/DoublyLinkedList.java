@@ -1,5 +1,6 @@
 package dataStrcutures.list;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -172,6 +173,19 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         tail.setNext(null);
         size--;
 
+    }
+
+    public void addAll(Collection<T> collection) {
+        addAll(collection, false);
+    }
+
+    public void addAll(Collection<T> collection, boolean reverse) {
+        for (T data : collection) {
+            if (reverse)
+                addFirst(data);
+            else
+                addLast(data);
+        }
     }
 
     public boolean contains(T data) {

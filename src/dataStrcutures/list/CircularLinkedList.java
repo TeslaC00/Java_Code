@@ -1,5 +1,6 @@
 package dataStrcutures.list;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -151,6 +152,19 @@ public class CircularLinkedList<T> implements Iterable<T> {
 
     }
 
+    public void addAll(Collection<T> collection) {
+        addAll(collection, false);
+    }
+
+    public void addAll(Collection<T> collection, boolean reverse) {
+        for (T data : collection) {
+            if (reverse)
+                addFirst(data);
+            else
+                addLast(data);
+        }
+    }
+
     public boolean contains(T data) {
         if (isEmpty())
             throw new EmptyListException();
@@ -189,6 +203,12 @@ public class CircularLinkedList<T> implements Iterable<T> {
             currentNode = currentNode.getNext();
         }
         return currentNode.getData();
+    }
+
+    public T getHead() {
+        if (isEmpty())
+            throw new EmptyListException();
+        return tail.getNext().getData();
     }
 
     /** Index starts from 1 */
