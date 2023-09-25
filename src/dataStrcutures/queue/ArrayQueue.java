@@ -16,11 +16,19 @@ public class ArrayQueue {
         front = rear = -1;
     }
 
+    public boolean isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    public boolean isFull() {
+        return rear == maxSize - 1;
+    }
+
     public void enqueue(int item) {
-        if (front == -1 && rear == -1) {
+        if (isEmpty()) {
             front = rear = 0;
             array[rear] = item;
-        } else if (rear == maxSize - 1) {
+        } else if (isFull()) {
             System.err.println("Overflow");
         } else {
             array[++rear] = item;
@@ -28,7 +36,7 @@ public class ArrayQueue {
     }
 
     public int dequeue() {
-        if ((front == -1 && rear == -1) || front > rear) {
+        if (isEmpty() || front > rear) {
             System.err.println("Underflow");
             return Integer.MIN_VALUE;
         } else {

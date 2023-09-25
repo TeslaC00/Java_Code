@@ -1,8 +1,9 @@
 package dataStrcutures.queue;
 
 public class CircularQueue {
-    private final static int DEFAULT_SIZE = 16;
-    private int maxSize, front, rear;
+
+    private static final int DEFAULT_SIZE = 16;
+    private int front, rear, maxSize;
     private int[] array;
 
     public CircularQueue() {
@@ -15,45 +16,67 @@ public class CircularQueue {
         front = rear = -1;
     }
 
+    public boolean isFull() {
+        return (rear + 1) % maxSize == front;
+    }
+
     public boolean isEmpty() {
         return front == -1 && rear == -1;
     }
 
-    public void enqueue(int item) {
+    public int peek() {
         if (isEmpty()) {
-            front = 0;
-            rear=0;
+            return Integer.MIN_VALUE;
         }
-        if ((rear+1)-front==0 && !isEmpty()) {
-            System.err.println("Queue overflow");
-            return;
-        }
-        array[(rear++) % maxSize] = item;
-
+        return array[front];
     }
 
-    public void dequeue() {
+    public void enqueue(int item) {
         if (isEmpty()) {
-            System.err.println("Queue underflow");
-            return;
-        }
-        if (front % rear == 0) {
-            front = rear = -1;
+            front = rear = 0;
+            array[rear] = item;
+        } else if (isFull()) {
+            System.err.println("Overflow");
         } else {
-            front++;
+            rear = (rear + 1) % maxSize;
+            array[rear] = item;
+        }
+    }
+
+    public int dequeue() {
+        if (isEmpty()) {
+            System.err.println("Underflow");
+            return Integer.MIN_VALUE;
+        } else if (rear == front) {
+            int item = array[front];
+            front = rear = -1;
+            return item;
+        } else {
+            int item = array[front];
+            front = (front + 1) % maxSize;
+            return item;
         }
     }
 
     public void display() {
-        if (isEmpty()) {
-            System.err.println("Queue is empty");
-            return;
-        }
-        for (int index = front; index<(Math.abs(front-rear))-maxSize; index=(index+1)%maxSize) {
-            System.out.print(array[index] + " ");
+        if (isFull()) {
+            int i = front;
+            do {
+                System.out.print(array[i] + " ");
+                i = (i + 1) % maxSize;
+            } while (i != front);
+        } else if (front <= rear) {
+            for (int i = front; i <= rear; i++) {
+                System.out.println("front less than rear");
+                System.out.print(array[i] + " ");
+            }
+        } else {
+            for (int i = front; i != (rear + 1); i = (i + 1) % maxSize) {
+                System.out.println("front greater than rear");
+                System.out.print(array[i] + " ");
+            }
         }
         System.out.println();
-
     }
 
 }
