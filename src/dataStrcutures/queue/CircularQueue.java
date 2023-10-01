@@ -59,24 +59,14 @@ public class CircularQueue {
     }
 
     public void display() {
-        if (isFull()) {
-            int i = front;
-            do {
-                System.out.print(array[i] + " ");
-                i = (i + 1) % maxSize;
-            } while (i != front);
-        } else if (front <= rear) {
-            for (int i = front; i <= rear; i++) {
-                System.out.println("front less than rear");
-                System.out.print(array[i] + " ");
-            }
-        } else {
-            for (int i = front; i != (rear + 1); i = (i + 1) % maxSize) {
-                System.out.println("front greater than rear");
-                System.out.print(array[i] + " ");
-            }
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return;
         }
-        System.out.println();
+        for (int i = front; i != rear; i = (i + 1) % maxSize) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.print(array[rear] + "\n");
     }
 
 }

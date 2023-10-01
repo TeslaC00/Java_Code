@@ -28,7 +28,7 @@ public class Demo {
         // checkParenthesis();
     }
 
-    private static void checkParenthesis() {
+    static void checkParenthesis() {
         System.out.println("() : "+ParenthesisBalanced("()")); // Balanced
         System.out.println("(()) : "+ParenthesisBalanced("(())")); // Balanced
         System.out.println("( : "+ParenthesisBalanced("(")); // UnBalanced
@@ -39,7 +39,7 @@ public class Demo {
         System.out.println("()()( : "+ParenthesisBalanced("()()(")); // UnBalanced
     }
 
-    private static String reverse(String string) {
+    static String reverse(String string) {
         String str[] = string.split(" ");
         ListStack<String> stack = new ListStack<>();
         for (String word : str) {
@@ -52,7 +52,7 @@ public class Demo {
         return stringBuilder.toString();
     }
 
-    public static String ParenthesisBalanced(String string) {
+    static String ParenthesisBalanced(String string) {
         ListStack<String> stack = new ListStack<>();
         for (String token : string.split("")) {
             if (token.equals("(")) {

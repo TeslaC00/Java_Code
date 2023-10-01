@@ -3,13 +3,30 @@ package testing;
 import java.util.Arrays;
 
 import dataStrcutures.list.*;
-import dataStrcutures.queue.ArrayQueue;
-import dataStrcutures.queue.CircularQueue;
+import dataStrcutures.queue.*;
 import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        arrayQueueTest();
+        doubleEndedQueueTest();
+    }
+
+    static void doubleEndedQueueTest() {
+        DoubleEndedQueue queue = new DoubleEndedQueue();
+        queue.enqueueFront(1);
+        queue.enqueueRear(20);
+        queue.enqueueFront(10);
+        queue.enqueueRear(2);
+        queue.display();
+        queue.dequeueFront();
+        queue.display();
+        queue.dequeueRear();
+        queue.display();
+        queue.dequeueFront();
+        queue.display();
+        System.out.println("Peek: "+queue.peek());
+        queue.dequeueRear();
+        queue.display();
     }
 
     static void circularQueueTest() {
@@ -18,7 +35,8 @@ class TestList {
         queue.enqueue(22);
         queue.enqueue(3);
         queue.display();
-        queue.enqueue(3);
+        queue.dequeue();
+        queue.display();
     }
 
     static void arrayQueueTest() {

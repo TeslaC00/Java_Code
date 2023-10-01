@@ -1,17 +1,17 @@
 package dataStrcutures.queue;
 
-import dataStrcutures.list.CircularLinkedList;
+import dataStrcutures.list.SingleLinkedList;
 
 public class ListQueue<T> {
     
-    private CircularLinkedList<T> list;
+    private SingleLinkedList<T> list;
 
     public ListQueue(){
-        list = new CircularLinkedList<>();
+        list = new SingleLinkedList<>();
     }
 
     public int size(){
-        return list.getSize();
+        return list.size();
     }
 
     public void clear(){
