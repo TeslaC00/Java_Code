@@ -1,38 +1,57 @@
 package dataStrcutures.queue;
 
+import dataStrcutures.list.LinkedList;
 import dataStrcutures.list.SingleLinkedList;
 
 public class ListQueue<T> {
-    
-    private SingleLinkedList<T> list;
 
-    public ListQueue(){
+    private LinkedList<T> list;
+
+    public ListQueue() {
         list = new SingleLinkedList<>();
     }
 
-    public int size(){
+    public int size() {
         return list.size();
     }
 
-    public void clear(){
+    public void clear() {
         list.clear();
     }
 
-    public T peek(){
+    public T peek() {
         return list.getHead();
     }
 
-    public void enqueue(T item){
+    public void enqueue(T item) {
         list.addLast(item);
     }
 
-    public T dequeue(){
+    public void enqueueFirst(T item) {
+        list.addFirst(item);
+    }
+
+    public void enqueueLast(T item) {
+        list.addLast(item);
+    }
+
+    public T dequeue() {
+        return dequeueFirst();
+    }
+
+    public T dequeueFirst() {
         T item = list.getHead();
         list.removeFirst();
         return item;
     }
 
-    public void display(){
+    public T dequeueLast() {
+        T item = list.getLast();
+        list.removeLast();
+        return item;
+    }
+
+    public void display() {
         list.display();
     }
 

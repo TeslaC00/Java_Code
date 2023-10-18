@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import dataStrcutures.list.LinkedList;
 import dataStrcutures.list.SingleLinkedList;
 
 public class ListStack<T> implements Iterable<T> {
 
-    private SingleLinkedList<T> list;
+    private LinkedList<T> list;
 
     public ListStack() {
         list = new SingleLinkedList<T>();

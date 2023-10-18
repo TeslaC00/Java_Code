@@ -2,13 +2,16 @@ package testing;
 
 import java.util.Arrays;
 
-import dataStrcutures.list.*;
+import dataStrcutures.list.CircularDoublyLinkedList;
+import dataStrcutures.list.CircularLinkedList;
+import dataStrcutures.list.DoublyLinkedList;
+import dataStrcutures.list.SingleLinkedList;
 import dataStrcutures.queue.*;
 import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        doubleEndedQueueTest();
+        singleListTest();
     }
 
     static void doubleEndedQueueTest() {
@@ -125,7 +128,7 @@ class TestList {
     }
 
     static void singleListTest() {
-        SingleLinkedList<Integer> list = new SingleLinkedList<Integer>();
+        SingleLinkedList<Integer> list = new SingleLinkedList<>();
         Integer[] arr = { 1, 2, 3, 4, 5 };
         list.addAll(Arrays.asList(arr), true);
         list.display();
@@ -148,8 +151,8 @@ class TestList {
         System.out.println(list.toString().length());
         System.out.println(list.indexOf(54));
         list.removeValue(54);
-        for (Integer i : list) {
-            System.out.print(i + " ");
+        for(Integer i: list){
+            System.out.print(i+" ");
         }
         System.out.println("\nSize: " + list.size());
         list.removeValue(3444);

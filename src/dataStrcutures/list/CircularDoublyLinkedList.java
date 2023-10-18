@@ -6,11 +6,7 @@ import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * traverseForward()
- * traverseBackward()
- */
-public class CircularDoublyLinkedList<T> implements Iterable<T> {
+public class CircularDoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {
 
@@ -324,5 +320,23 @@ public class CircularDoublyLinkedList<T> implements Iterable<T> {
             return data;
         }
 
+    }
+
+    @Override
+    public T getHead() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public T getLast() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void reverse() {
+        // TODO Auto-generated method stub
+        
     }
 }

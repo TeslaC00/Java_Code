@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-public class CircularLinkedList<T> implements Iterable<T> {
+public class CircularLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {
         private T data;
@@ -168,14 +168,6 @@ public class CircularLinkedList<T> implements Iterable<T> {
     public boolean contains(T data) {
         if (isEmpty())
             throw new EmptyListException();
-
-        // Node<T> currentNode = tail.getNext();
-        // for (int i = 1; i <= size; i++) {
-        // if (currentNode.getData().equals(data)) {
-        // return true;
-        // }
-        // currentNode = currentNode.getNext();
-        // }
         return indexOf(data) != -1;
     }
 
@@ -300,6 +292,24 @@ public class CircularLinkedList<T> implements Iterable<T> {
             return data;
         }
 
+    }
+
+    @Override
+    public T getLast() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void reverse() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public int size() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }

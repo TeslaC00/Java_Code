@@ -5,21 +5,22 @@ import dataStrcutures.stack.ListStack;
 public class Demo {
     final static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
+        
         // ListCreater listCreater = new ListCreater();
         // listCreater.menu();
         
         // Infix to Postfix
-        InfixConverter demo = new InfixConverter("4 + 5 * ( 6 - 2 ) / 2"); // Ans:117
-        // A B D + E / * F G H K / + * - 
-        System.out.println(demo.evaluateToPostfix());
-        PostFix postFix = new PostFix(demo.evaluateToPostfix());
-        System.out.println(postFix.evaluate());
+        // InfixConverter demo = new InfixConverter("4 + 5 * ( 6 - 2 ) / 2"); // Ans:117
+        // // A B D + E / * F G H K / + * - 
+        // System.out.println(demo.evaluateToPostfix());
+        // PostFix postFix = new PostFix(demo.evaluateToPostfix());
+        // System.out.println(postFix.evaluate());
         
-        // Infix to Prefix
-        // - / * A + B D E * F + G / H K
-        System.out.println(demo.evaluateToPrefix());
-        Prefix prefix = new Prefix(demo.evaluateToPrefix());
-        System.out.println(prefix.evaluate());
+        // // Infix to Prefix
+        // // - / * A + B D E * F + G / H K
+        // System.out.println(demo.evaluateToPrefix());
+        // Prefix prefix = new Prefix(demo.evaluateToPrefix());
+        // System.out.println(prefix.evaluate());
 
         // Reverse String using stack
         // System.out.println(reverse("This is a test sentence"));

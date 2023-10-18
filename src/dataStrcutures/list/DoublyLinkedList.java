@@ -11,7 +11,7 @@ import dataStrcutures.exceptions.EmptyListException;
  * iterateBackward()
  */
 
-public class DoublyLinkedList<T> implements Iterable<T> {
+public class DoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {
 
@@ -175,6 +175,14 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
     }
 
+    @Override
+    public T getHead() {
+    }
+
+    @Override
+    public T getLast() {
+    }
+
     public void addAll(Collection<T> collection) {
         addAll(collection, false);
     }
@@ -271,6 +279,10 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             currentNode = currentNode.getNext();
         }
 
+    }
+
+    @Override
+    public void reverse() {
     }
 
     /** Elements are seperated by space */
