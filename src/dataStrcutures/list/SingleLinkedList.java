@@ -74,7 +74,6 @@ public class SingleLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     @Override
     public void addMid(int index, T data) {
-        assertEmpty();
 
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index is out of bound");

@@ -6,10 +6,7 @@ import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * iterateForward()
- * iterateBackward()
- */
+// TODO: Change indexing to 0 based
 
 public class DoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
@@ -177,10 +174,14 @@ public class DoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     @Override
     public T getHead() {
+        // TODO: add code
+        return null;
     }
 
     @Override
     public T getLast() {
+        // TODO: add code
+        return null;
     }
 
     public void addAll(Collection<T> collection) {

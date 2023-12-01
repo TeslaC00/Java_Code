@@ -22,6 +22,7 @@ public interface LinkedList<T> {
 
     void removeLast();
 
+    // TODO: Change method to work with non-empty list
     void addAll(Collection<T> collection);
 
     void addAll(Collection<T> collection, boolean reverse);

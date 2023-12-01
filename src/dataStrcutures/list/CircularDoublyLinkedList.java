@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
+// TODO: Change indexing to 0 based
+
 public class CircularDoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {

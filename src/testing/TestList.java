@@ -2,16 +2,13 @@ package testing;
 
 import java.util.Arrays;
 
-import dataStrcutures.list.CircularDoublyLinkedList;
-import dataStrcutures.list.CircularLinkedList;
-import dataStrcutures.list.DoublyLinkedList;
-import dataStrcutures.list.SingleLinkedList;
+import dataStrcutures.list.*;
 import dataStrcutures.queue.*;
 import dataStrcutures.stack.*;
 
 class TestList {
     public static void main(String[] args) {
-        singleListTest();
+        doublyListTest();
     }
 
     static void doubleEndedQueueTest() {
