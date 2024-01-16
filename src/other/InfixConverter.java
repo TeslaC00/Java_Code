@@ -1,3 +1,4 @@
+package other;
 import dataStrcutures.stack.ListStack;
 
 public class InfixConverter {
@@ -69,22 +70,13 @@ public class InfixConverter {
     }
 
     private int precedence(String operator) {
-        switch (operator) {
-            case "+":
-            case "-":
-                return 1;
-            case "*":
-            case "/":
-                return 2;
-            case "^":
-                return 3;
-            case "(":
-            case ")":
-                return 0;
-            case null:
-            default:
-                return -1;
-        }
+        return switch (operator) {
+            case "+", "-" -> 1;
+            case "*", "/" -> 2;
+            case "^" -> 3;
+            case "(", ")" -> 0;
+            default -> -1;
+        };
     }
 
     private boolean isOperator(String token) {

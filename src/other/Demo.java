@@ -1,6 +1,8 @@
+package other;
 import java.util.Scanner;
 
 import dataStrcutures.stack.ListStack;
+import helper.MathUtils;
 
 public class Demo {
     final static Scanner scan = new Scanner(System.in);

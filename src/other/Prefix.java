@@ -1,3 +1,4 @@
+package other;
 import dataStrcutures.stack.ListStack;
 
 public class Prefix {
