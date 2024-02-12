@@ -25,10 +25,10 @@ public class ADA {
     }
 
     public static void insertionSort(int[] array) {
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 1; i < array.length; ++i) {
             int key = array[i];
             int j = i - 1;
-            while (j > 0 && array[j] > key) {
+            while (j >= 0 && array[j] > key) {
                 array[j + 1] = array[j];
                 j--;
             }
@@ -56,8 +56,8 @@ public class ADA {
     private static void quickSortPartition(int[] array, int low, int high) {
         if (low < high) {
             int pivot = quickSortSorter(array, low, high);
-            quickSortSorter(array, low, pivot - 1);
-            quickSortSorter(array, pivot + 1, high);
+            quickSortPartition(array, low, pivot - 1);
+            quickSortPartition(array, pivot + 1, high);
         }
     }
 
