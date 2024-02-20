@@ -98,10 +98,10 @@ public class ADA {
             else
                 sorted[index++] = array[right++];
         }
-        while(left<=mid){
+        while (left <= mid) {
             sorted[index++] = array[left++];
         }
-        while(right<=end){
+        while (right <= end) {
             sorted[index++] = array[right++];
         }
         for (int j = 0; j < sorted.length; j++) {
@@ -109,33 +109,52 @@ public class ADA {
         }
     }
 
-    public static int binarySearch(int[] array, int value){
-        int low = 0,high=array.length-1;
-        int mid = low + (high-low)/2;
-        while (low<=high) {
-            if(array[mid]<value) low = mid+1;
-            else if(array[mid]>value) high = mid-1;
-            else if(array[mid]==value) return mid;
-            mid = low + (high-low)/2;
+    public static int binarySearch(int[] array, int value) {
+        int low = 0, high = array.length - 1;
+        int mid = low + (high - low) / 2;
+        while (low <= high) {
+            if (array[mid] < value)
+                low = mid + 1;
+            else if (array[mid] > value)
+                high = mid - 1;
+            else if (array[mid] == value)
+                return mid;
+            mid = low + (high - low) / 2;
         }
-        return - 1;
+        return -1;
     }
 
-    public static int[] findMinMax(int[] array, int low, int high){
-        if(low==high){
-            return new int[] {array[low],array[low]};
+    public static int[] findMinMax(int[] array, int low, int high) {
+        if (low == high) {
+            return new int[] { array[low], array[low] };
+        } else if (low == high - 1) {
+            int min = array[low] < array[high] ? array[low] : array[high];
+            int max = array[low] > array[high] ? array[low] : array[high];
+            return new int[] { min, max };
         }
-        else if(low==high-1){
-            int min = array[low]<array[high]? array[low]:array[high];
-            int max = array[low]>array[high]? array[low]:array[high];
-            return new int[] {min,max};
-        }
-        int mid = low + (high-low)/2;
+        int mid = low + (high - low) / 2;
         int[] first = findMinMax(array, low, mid);
-        int[] second = findMinMax(array, mid+1, high);
-        int min = first[0]<second[0]? first[0]:second[0];
-        int max = first[1]>second[1]? first[1]:second[1];
-        return new int[] {min,max};
+        int[] second = findMinMax(array, mid + 1, high);
+        int min = first[0] < second[0] ? first[0] : second[0];
+        int max = first[1] > second[1] ? first[1] : second[1];
+        return new int[] { min, max };
+    }
+
+    public static Matrix strassenMultiplication(Matrix a, Matrix b){
+        if(a.getRows()>=2){}
+        return null;
+    }
+
+    public static int[][] matrixMultiply(int[][] a, int[][] b) {
+        int[][] result = new int[a.length][b[0].length];
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                for (int k = 0; k < result.length; k++) {
+                    result[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        return result;
     }
 
 }
