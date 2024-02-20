@@ -6,10 +6,24 @@ import java.util.Random;
 
 public class Matrix {
 
-    private class IllegalMatrixArgumentException extends IllegalArgumentException {
-        IllegalMatrixArgumentException() {
-            super("Both matrices must be square of the same size");
-        }
+    // TODO: vertical and horizontal split
+
+    public int[][] data;
+    private int rows, cols;
+
+    public Matrix() {
+    }
+
+    public Matrix(int row, int col) {
+        this.rows = row;
+        this.cols = col;
+        this.data = new int[row][col];
+    }
+
+    public Matrix(int[][] data) {
+        this.rows = data.length;
+        this.cols = (rows == 0) ? 0 : data[0].length;
+        this.data = Arrays.copyOf(data, data.length);
     }
 
     public static Matrix Identity(int size) {
@@ -28,35 +42,6 @@ public class Matrix {
             }
         }
         return new Matrix(randomData);
-    }
-
-    public int[][] data;
-
-    private int rows, cols;
-    // TODO: vertical and horizontal split
-
-    public Matrix() {
-    }
-
-    public Matrix(int row, int col) {
-        this.rows = row;
-        this.cols = col;
-        this.data = new int[row][col];
-    }
-
-    public Matrix(int[][] data) {
-        this.rows = data.length;
-        this.cols = (rows == 0) ? 0 : data[0].length;
-        this.data = Arrays.copyOf(data, data.length);
-    }
-
-    public int get(int row, int col) {
-        return data[row][col];
-    }
-
-    public void set(int row, int col, int value) {
-        // TODO: uncovered test case
-        data[row][col] = value;
     }
 
     public Matrix add(Matrix other) {
@@ -81,7 +66,7 @@ public class Matrix {
 
     public Matrix multiply(Matrix other) {
         if (this.cols != other.rows)
-            throw new IllegalMatrixArgumentException();
+            throw new IllegalArgumentException();
 
         Matrix result = new Matrix(this.rows, other.cols);
         for (int i = 0; i < this.rows; i++) {
@@ -124,7 +109,7 @@ public class Matrix {
 
     public Matrix joinHorizontal(Matrix other) {
         if (this.rows != other.rows)
-            throw new IllegalMatrixArgumentException();
+            throw new IllegalArgumentException();
 
         Matrix result = new Matrix(this.rows, this.cols + other.cols);
         for (int i = 0; i < this.rows; i++) {
@@ -136,7 +121,7 @@ public class Matrix {
 
     public Matrix joinVertical(Matrix other) {
         if (this.cols != other.cols)
-            throw new IllegalMatrixArgumentException();
+            throw new IllegalArgumentException();
 
         Matrix result = new Matrix(this.rows + other.rows, this.cols);
         for (int i = 0; i < this.rows; i++) {
@@ -148,23 +133,9 @@ public class Matrix {
         return result;
     }
 
-    // TODO: uncovered test case
-    public Matrix padMatrix(int row, int col) {
-        Matrix paddedMatrix = new Matrix(row, col);
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (i < this.rows && j < this.cols)
-                    paddedMatrix.set(i, j, this.data[i][j]);
-                else
-                    paddedMatrix.set(i, j, 0);
-            }
-        }
-        return paddedMatrix;
-    }
-
     public Matrix[][] splitIntoSubMatrices(int row, int col) {
         if (row > this.rows || col > this.cols || row <= 0 || col <= 0)
-            throw new IllegalMatrixArgumentException();
+            throw new IllegalArgumentException();
 
         int r = Math.ceilDiv(this.rows, row);
         int c = Math.ceilDiv(this.cols, col);
@@ -181,7 +152,7 @@ public class Matrix {
     // TODO: needs attention
     public Matrix[][] splitIntoSubMatrices(Matrix matrix, int row, int col) {
         if (row > matrix.rows || col > matrix.cols || row <= 0 || col <= 0)
-            throw new IllegalMatrixArgumentException();
+            throw new IllegalArgumentException();
 
         int r = Math.ceilDiv(matrix.rows, row);
         int c = Math.ceilDiv(matrix.cols, col);
@@ -208,6 +179,29 @@ public class Matrix {
         return splitIntoSubMatrices(paddedMatrix, row, col);
     }
 
+    // TODO: uncovered test case
+    public Matrix padMatrix(int row, int col) {
+        Matrix paddedMatrix = new Matrix(row, col);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (i < this.rows && j < this.cols)
+                    paddedMatrix.set(i, j, this.data[i][j]);
+                else
+                    paddedMatrix.set(i, j, 0);
+            }
+        }
+        return paddedMatrix;
+    }
+
+    // TODO: needs attention
+    private Matrix padMatrix(Matrix matrix, int size) {
+        Matrix paddedMatrix = new Matrix(size, size);
+        for (int i = 0; i < matrix.rows; i++) {
+            System.arraycopy(matrix.data[i], 0, paddedMatrix.data[i], 0, matrix.cols);
+        }
+        return paddedMatrix;
+    }
+
     public Matrix strassenMultiply(Matrix other) {
         return strassenMultiply(other, false);
     }
@@ -215,7 +209,7 @@ public class Matrix {
     // TODO: uncovered test case
     public Matrix strassenMultiply(Matrix other, boolean padded) {
         if (this.cols != other.rows)
-            throw new IllegalMatrixArgumentException();
+            throw new IllegalArgumentException();
         if (!padded) {
             return strassenMultiplyRecursive(this, other);
         }
@@ -236,12 +230,62 @@ public class Matrix {
         return result;
     }
 
+    // TODO: uncovered test case
+    private Matrix strassenMultiplyRecursive(Matrix a, Matrix b) {
+        int n = a.rows;
+
+        if (n == 1) {
+            Matrix result = new Matrix(1, 1);
+            result.set(0, 0, a.get(0, 0) * b.get(0, 0));
+            return result;
+        }
+        // Divide matrices into submatrices
+        Matrix[][] aSub = a.splitIntoSubMatrices(2, 2);
+        Matrix[][] bSub = b.splitIntoSubMatrices(2, 2);
+
+        // Compute the intermediate matrices
+        Matrix p1 = strassenMultiplyRecursive(aSub[0][0], bSub[0][1].subtract(bSub[1][1]));
+        Matrix p2 = strassenMultiplyRecursive(aSub[0][0].add(aSub[0][1]), bSub[1][1]);
+        Matrix p3 = strassenMultiplyRecursive(aSub[1][0].add(aSub[1][1]), bSub[0][0]);
+        Matrix p4 = strassenMultiplyRecursive(aSub[1][1], bSub[1][0].subtract(bSub[0][0]));
+        Matrix p5 = strassenMultiplyRecursive(aSub[0][0].add(aSub[1][1]), bSub[0][0].add(bSub[1][1]));
+        Matrix p6 = strassenMultiplyRecursive(aSub[0][1].subtract(aSub[1][1]), bSub[1][0].add(bSub[1][1]));
+        Matrix p7 = strassenMultiplyRecursive(aSub[0][0].subtract(aSub[1][0]), bSub[0][0].add(bSub[0][1]));
+
+        // Compute result submatrices
+        Matrix c11 = p5.add(p4).subtract(p2).add(p6);
+        Matrix c12 = p1.add(p2);
+        Matrix c21 = p3.add(p4);
+        Matrix c22 = p5.add(p1).subtract(p3).subtract(p7);
+
+        // Combine result submatrices
+        return c11.joinHorizontal(c12).joinVertical(c21.joinHorizontal(c22));
+    }
+
+    // TODO: uncovered test case
+    private Matrix trimMatrix(Matrix matrix, int rows, int cols) {
+        Matrix trimmedMatrix = new Matrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(matrix.data[i], 0, trimmedMatrix.data[i], 0, cols);
+        }
+        return trimmedMatrix;
+    }
+
     public void display() {
         for (int[] i : data) {
             for (int j : i)
                 System.out.print(j + " ");
             System.out.println();
         }
+    }
+
+    public int get(int row, int col) {
+        return data[row][col];
+    }
+
+    public void set(int row, int col, int value) {
+        // TODO: uncovered test case
+        data[row][col] = value;
     }
 
     public int[][] getData() {
@@ -297,56 +341,6 @@ public class Matrix {
                 return false;
         }
         return true;
-    }
-
-    // TODO: needs attention
-    private Matrix padMatrix(Matrix matrix, int size) {
-        Matrix paddedMatrix = new Matrix(size, size);
-        for (int i = 0; i < matrix.rows; i++) {
-            System.arraycopy(matrix.data[i], 0, paddedMatrix.data[i], 0, matrix.cols);
-        }
-        return paddedMatrix;
-    }
-
-    // TODO: uncovered test case
-    private Matrix strassenMultiplyRecursive(Matrix a, Matrix b) {
-        int n = a.rows;
-
-        if (n == 1) {
-            Matrix result = new Matrix(1, 1);
-            result.set(0, 0, a.get(0, 0) * b.get(0, 0));
-            return result;
-        }
-        // Divide matrices into submatrices
-        Matrix[][] aSub = a.splitIntoSubMatrices(2, 2);
-        Matrix[][] bSub = b.splitIntoSubMatrices(2, 2);
-
-        // Compute the intermediate matrices
-        Matrix p1 = strassenMultiplyRecursive(aSub[0][0], bSub[0][1].subtract(bSub[1][1]));
-        Matrix p2 = strassenMultiplyRecursive(aSub[0][0].add(aSub[0][1]), bSub[1][1]);
-        Matrix p3 = strassenMultiplyRecursive(aSub[1][0].add(aSub[1][1]), bSub[0][0]);
-        Matrix p4 = strassenMultiplyRecursive(aSub[1][1], bSub[1][0].subtract(bSub[0][0]));
-        Matrix p5 = strassenMultiplyRecursive(aSub[0][0].add(aSub[1][1]), bSub[0][0].add(bSub[1][1]));
-        Matrix p6 = strassenMultiplyRecursive(aSub[0][1].subtract(aSub[1][1]), bSub[1][0].add(bSub[1][1]));
-        Matrix p7 = strassenMultiplyRecursive(aSub[0][0].subtract(aSub[1][0]), bSub[0][0].add(bSub[0][1]));
-
-        // Compute result submatrices
-        Matrix c11 = p5.add(p4).subtract(p2).add(p6);
-        Matrix c12 = p1.add(p2);
-        Matrix c21 = p3.add(p4);
-        Matrix c22 = p5.add(p1).subtract(p3).subtract(p7);
-
-        // Combine result submatrices
-        return c11.joinHorizontal(c12).joinVertical(c21.joinHorizontal(c22));
-    }
-
-    // TODO: uncovered test case
-    private Matrix trimMatrix(Matrix matrix, int rows, int cols) {
-        Matrix trimmedMatrix = new Matrix(rows, cols);
-        for (int i = 0; i < rows; i++) {
-            System.arraycopy(matrix.data[i], 0, trimmedMatrix.data[i], 0, cols);
-        }
-        return trimmedMatrix;
     }
 
 }
