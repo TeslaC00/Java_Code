@@ -11,8 +11,13 @@ public class Main {
         int[][] matrix = {  { 1, 2, 3, 4 },
                             { 5, 6, 7, 8 },
                             { 1, 2, 3, 4 },
-                             };
+                            };
         Matrix m = new Matrix(matrix);
-        m.strassenMultiply(m).display();
+        // m.strassenMultiply(m).display();
+        for (Matrix[] is : m.splitPadded(2, 2)) {
+            for (Matrix i : is) {
+                System.out.println(i);
+            }
+        }
     }
 }
