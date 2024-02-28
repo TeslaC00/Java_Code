@@ -1,10 +1,15 @@
 package dataStrcutures.stack;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import dataStrcutures.list.LinkedList;
 import dataStrcutures.list.SingleLinkedList;
 
-public class ListStack<T> {
+public class ListStack<T> implements Iterable<T> {
 
-    private SingleLinkedList<T> list;
+    private LinkedList<T> list;
 
     public ListStack() {
         list = new SingleLinkedList<T>();
@@ -16,6 +21,10 @@ public class ListStack<T> {
 
     public void clear() {
         list.clear();
+    }
+
+    public int size() {
+        return list.size();
     }
 
     public void push(T data) {
@@ -32,7 +41,37 @@ public class ListStack<T> {
         return list.getHead();
     }
 
+    public void addAll(Collection<T> collection) {
+        list.addAll(collection);
+    }
+
+    public void addAll(Collection<T> collection, boolean reverse) {
+        list.addAll(collection, reverse);
+    }
+
     public void display() {
         list.display();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListStackIterator();
+    }
+
+    private class ListStackIterator implements Iterator<T> {
+
+        @Override
+        public boolean hasNext() {
+            return !isEmpty();
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return pop();
+        }
+
     }
 }

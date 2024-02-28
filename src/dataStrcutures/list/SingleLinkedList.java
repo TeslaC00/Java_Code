@@ -1,15 +1,12 @@
 package dataStrcutures.list;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * reverse()
- */
-
-public class SingleLinkedList<T> implements Iterable<T> {
+public class SingleLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {
 
@@ -47,129 +44,167 @@ public class SingleLinkedList<T> implements Iterable<T> {
         size = 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public boolean isEmpty() {
         return head == null;
     }
 
+    @Override
     public void clear() {
         head = null;
         size = 0;
     }
 
+    private void assertEmpty() {
+        if (isEmpty())
+            throw new EmptyListException();
+    }
+
+    @Override
     public void addFirst(T data) {
         Node<T> newNode = new Node<T>(data, head);
         head = newNode;
         size++;
     }
 
-    /** Index starts from 1 */
+    @Override
     public void addMid(int index, T data) {
-        if (isEmpty())
-            throw new EmptyListException();
 
-        if (index < 1 || index > size)
+        if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index is out of bound");
 
-        if (index == 1)
+        if (index == 0) {
             addFirst(data);
-        else {
-            Node<T> currentNode = head;
-            for (int i = 1; i < index - 1; i++) {
-                currentNode = currentNode.getNext();
-            }
-            Node<T> newNode = new Node<T>(data, currentNode.getNext());
-            currentNode.setNext(newNode);
-            size++;
+            return;
         }
+
+        if (index == size) {
+            addLast(data);
+            return;
+        }
+
+        Node<T> currentNode = head;
+        for (int i = 0; i < index - 1; i++) {
+            currentNode = currentNode.getNext();
+        }
+        Node<T> newNode = new Node<T>(data, currentNode.getNext());
+        currentNode.setNext(newNode);
+        size++;
     }
 
+    @Override
     public void addLast(T data) {
         Node<T> newNode = new Node<T>(data, null);
         if (isEmpty()) {
             head = newNode;
         } else {
-            // Node lastNode = head;
-            // while (lastNode.getNext() != null) {
-            // lastNode = lastNode.getNext();
-            // }
-            Node<T> currentNode, nextNode;
-            for (currentNode = head; (nextNode = currentNode.getNext()) != null; currentNode = nextNode)
-                ;
+            Node<T> currentNode = head;
+            while (currentNode.getNext() != null) {
+                currentNode = currentNode.getNext();
+            }
             currentNode.setNext(newNode);
         }
         size++;
     }
 
+    @Override
     public void removeFirst() {
-        if (isEmpty())
-            throw new EmptyListException();
-
+        assertEmpty();
         head = head.getNext();
         size--;
     }
 
-    /** Index starts from 1 */
+    @Override
     public void removeMid(int index) {
-        if (isEmpty())
-            throw new EmptyListException();
+        assertEmpty();
 
-        if (index < 1 || index > size)
+        if (index < 0 || index > size - 1)
             throw new IndexOutOfBoundsException("Index is out of bound");
 
-        if (index == 1)
+        if (index == 0) {
             removeFirst();
-
-        else {
-            Node<T> currentNode = head;
-            for (int i = 1; i < index - 1; i++) {
-                currentNode = currentNode.getNext();
-            }
-            currentNode.setNext(currentNode.getNext().getNext());
-            size--;
+            return;
         }
+
+        Node<T> currentNode = head;
+        for (int i = 0; i < index - 1; i++) {
+            currentNode = currentNode.getNext();
+        }
+        currentNode.setNext(currentNode.getNext().getNext());
+        size--;
+
     }
 
+    @Override
     public void removeLast() {
-        if (isEmpty())
-            throw new EmptyListException();
+        assertEmpty();
         if (size == 1) {
             clear();
-        } else {
-            Node<T> currentNode = head;
-            while (currentNode.getNext().getNext() != null) {
-                currentNode = currentNode.getNext();
-            }
-            currentNode.setNext(null);
-            size--;
+            return;
+        }
+        Node<T> currentNode = head;
+        while (currentNode.getNext().getNext() != null) {
+            currentNode = currentNode.getNext();
+        }
+        currentNode.setNext(null);
+        size--;
+
+    }
+
+    @Override
+    public void addAll(Collection<T> collection) {
+        addAll(collection, false);
+    }
+
+    @Override
+    public void addAll(Collection<T> collection, boolean reverse) {
+        for (T data : collection) {
+            if (reverse)
+                addFirst(data);
+            else
+                addLast(data);
         }
     }
 
+    @Override
     public T get(int index) {
-        if (isEmpty())
-            throw new EmptyListException();
-        if (index < 0 || index > size) {
+        assertEmpty();
+        if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException("Index is out of bound");
         }
         Node<T> currentNode = head;
-        for (int i = 1; i < index; i++) {
+        for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
         return currentNode.getData();
     }
 
+    @Override
     public T getHead() {
-        if (!isEmpty())
-            return head.data;
-        return null;
+        if (isEmpty())
+            return null;
+        return head.getData();
     }
 
-    public void removeValue(T data) {
+    @Override
+    public T getLast() {
         if (isEmpty())
-            throw new EmptyListException();
+            return null;
+        Node<T> currentNode = head;
+        while (currentNode.getNext() != null) {
+            currentNode = currentNode.getNext();
+        }
+        return currentNode.getData();
+    }
+
+    @Override
+    public void removeValue(T data) {
+        assertEmpty();
         if (head.getData() == data) {
             removeFirst();
             return;
@@ -179,34 +214,25 @@ public class SingleLinkedList<T> implements Iterable<T> {
             if (currentNode.getNext().getData() == data) {
                 currentNode.setNext(currentNode.getNext().getNext());
                 size--;
-                return;
             }
             currentNode = currentNode.getNext();
         }
 
     }
 
+    @Override
     public boolean contains(T data) {
-        if (isEmpty())
-            throw new EmptyListException();
-
-        Node<T> currentNode = head;
-        while (currentNode != null) {
-            if (currentNode.getData() == data)
-                return true;
-            currentNode = currentNode.getNext();
-        }
-        return false;
+        return indexOf(data) >= 0;
     }
 
+    @Override
     public int indexOf(T data) {
-        if (isEmpty())
-            throw new EmptyListException();
+        assertEmpty();
 
         Node<T> currentNode = head;
-        int index = 1;
+        int index = 0;
         while (currentNode != null) {
-            if (currentNode.getData() == data)
+            if (currentNode.getData().equals(data))
                 return index;
             currentNode = currentNode.getNext();
             index++;
@@ -215,24 +241,25 @@ public class SingleLinkedList<T> implements Iterable<T> {
     }
 
     /** Index starts from 1 */
+    @Override
     public void set(int index, T data) {
-        if (isEmpty())
-            throw new EmptyListException();
-        if (index < 1 || index > size)
+        assertEmpty();
+        if (index < 0 || index > size - 1)
             throw new IndexOutOfBoundsException("Index is out of bound");
         Node<T> currentNode = head;
-        for (int i = 1; i < index; i++) {
+        for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
         currentNode.setData(data);
     }
 
-    public void reverse(){
+    @Override
+    public void reverse() {
         Node<T> prevNode = null;
         Node<T> currentNode = head;
         Node<T> nextNode = null;
 
-        while(currentNode != null){
+        while (currentNode != null) {
             nextNode = currentNode.getNext();
             currentNode.setNext(prevNode);
             prevNode = currentNode;
@@ -254,9 +281,9 @@ public class SingleLinkedList<T> implements Iterable<T> {
         return strBuilder.toString();
     }
 
+    @Override
     public void display() {
-        if (isEmpty())
-            throw new EmptyListException();
+        assertEmpty();
         for (T i : this) {
             System.out.print(i + " ");
         }

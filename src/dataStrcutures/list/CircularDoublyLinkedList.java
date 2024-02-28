@@ -1,15 +1,14 @@
 package dataStrcutures.list;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * traverseForward()
- * traverseBackward()
- */
-public class CircularDoublyLinkedList<T> implements Iterable<T> {
+// TODO: Change indexing to 0 based
+
+public class CircularDoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {
 
@@ -176,6 +175,19 @@ public class CircularDoublyLinkedList<T> implements Iterable<T> {
         size--;
     }
 
+    public void addAll(Collection<T> collection) {
+        addAll(collection, false);
+    }
+
+    public void addAll(Collection<T> collection, boolean reverse) {
+        for (T data : collection) {
+            if (reverse)
+                addFirst(data);
+            else
+                addLast(data);
+        }
+    }
+
     public boolean contains(T data) {
         if (isEmpty())
             throw new EmptyListException();
@@ -310,5 +322,23 @@ public class CircularDoublyLinkedList<T> implements Iterable<T> {
             return data;
         }
 
+    }
+
+    @Override
+    public T getHead() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public T getLast() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void reverse() {
+        // TODO Auto-generated method stub
+        
     }
 }

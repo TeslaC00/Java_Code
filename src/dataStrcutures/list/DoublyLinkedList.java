@@ -1,16 +1,14 @@
 package dataStrcutures.list;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import dataStrcutures.exceptions.EmptyListException;
 
-/*
- * iterateForward()
- * iterateBackward()
- */
+// TODO: Change indexing to 0 based
 
-public class DoublyLinkedList<T> implements Iterable<T> {
+public class DoublyLinkedList<T> implements Iterable<T>, LinkedList<T> {
 
     private static class Node<T> {
 
@@ -174,6 +172,31 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
     }
 
+    @Override
+    public T getHead() {
+        // TODO: add code
+        return null;
+    }
+
+    @Override
+    public T getLast() {
+        // TODO: add code
+        return null;
+    }
+
+    public void addAll(Collection<T> collection) {
+        addAll(collection, false);
+    }
+
+    public void addAll(Collection<T> collection, boolean reverse) {
+        for (T data : collection) {
+            if (reverse)
+                addFirst(data);
+            else
+                addLast(data);
+        }
+    }
+
     public boolean contains(T data) {
         if (isEmpty())
             throw new EmptyListException();
@@ -257,6 +280,10 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             currentNode = currentNode.getNext();
         }
 
+    }
+
+    @Override
+    public void reverse() {
     }
 
     /** Elements are seperated by space */

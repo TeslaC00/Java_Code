@@ -1,3 +1,4 @@
+package other;
 import java.util.Scanner;
 
 import dataStrcutures.list.*;
@@ -81,7 +82,7 @@ public class ListCreater {
             case 2:
                 System.out.println("Give the index");
                 int index = scanner.nextInt();
-                list.addMid(data, index);
+                list.addMid(index, data);
                 break;
             case 3:
                 list.addLast(data);

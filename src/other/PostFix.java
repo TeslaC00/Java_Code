@@ -1,13 +1,11 @@
-import java.util.HashSet;
-import java.util.Set;
-
+package other;
 import dataStrcutures.stack.ListStack;
 
 public class PostFix {
 
     private ListStack<Integer> stack;
     private String expression;
-    private HashSet<String> OPERATORS = new HashSet<>(Set.of("+","-","*","/","^"));
+    private String OPERATORS = "+-*/^";
 
     public PostFix(String expression) {
         this.expression = expression;
@@ -22,8 +20,8 @@ public class PostFix {
             } else if (isOperator(token)) {
                 int opperand1 = stack.pop();
                 int opperand2 = stack.pop();
-                int value = operate(opperand2, opperand1, token);
-                stack.push(value);
+                int answer = operate(opperand2, opperand1, token);
+                stack.push(answer);
             }
         }
         return stack.pop();
@@ -45,7 +43,7 @@ public class PostFix {
             case "^":
                 return (int) Math.pow(a, b);
             default:
-                throw new IllegalArgumentException("Token not found");
+                throw new IllegalArgumentException("Token not valid");
         }
     }
 
