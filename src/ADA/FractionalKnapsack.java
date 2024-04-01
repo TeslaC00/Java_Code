@@ -1,4 +1,4 @@
-package other;
+package ADA;
 
 import java.util.Arrays;
 
@@ -36,14 +36,12 @@ public class FractionalKnapsack {
             int curProfit = item.profit;
 
             if (capacity - curWeight >= 0) {
-                // this item can be completely picked
                 capacity -= curWeight;
                 totalProfit += curProfit;
             } else {
-                // the item can't be picked whole
                 double fraction = ((double) capacity / curWeight);
                 totalProfit += (curProfit * fraction);
-                break; // the knapsack is full
+                break;
             }
         }
 

@@ -1,4 +1,6 @@
-package other;
+package ADA;
+
+import other.Matrix;
 
 public class ADA {
 
