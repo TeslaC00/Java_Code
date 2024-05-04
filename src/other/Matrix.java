@@ -7,6 +7,8 @@ import java.util.Random;
 public class Matrix {
 
     // TODO: vertical and horizontal split
+    // TODO: make other methods comapatible with empty matrix and dont assign row, col as 0
+    // TODO: make method to merge 2d matrices to a big matrix directly
 
     public int[][] data;
     private int rows, cols;
@@ -208,9 +210,9 @@ public class Matrix {
 
     // TODO: uncovered test case
     public Matrix strassenMultiply(Matrix other, boolean padded) {
-        if (this.cols != other.rows)
-            throw new IllegalArgumentException();
         if (!padded) {
+            if (this.cols != other.rows)
+                throw new IllegalArgumentException();
             return strassenMultiplyRecursive(this, other);
         }
         // Check if matrices are powers of 2 and if not, pad them with zeros
