@@ -1,10 +1,12 @@
 package helper;
 
 import java.util.Scanner;
-public class Get {
+
+public class Get{
     
-    Get(){}
-    static Scanner scan = new Scanner(System.in);
+    private static Scanner scan = new Scanner(System.in);
+
+    private Get(){}
 
     public static void array(int arr[], int size){ //method to scan int array of size "size"
         for(int i=0; i<size; i++){
